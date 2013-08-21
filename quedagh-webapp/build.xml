@@ -1,0 +1,101 @@
+<project name="quedagh-webapp" basedir="." default="update">
+
+	<property name="src.dir" value="src" />
+
+	<property name="build.dir" value="bin" />
+	<property name="war.dir" value="war" />
+	<property name="web-inf.dir" value="${war.dir}/WEB-INF" />
+	<property name="classes.dir" value="${web-inf.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}" />
+
+	<property name="generated.dir" value="generated" />
+	
+	<property name="lib.dir" value="lib" />
+	<property name="web-lib.dir" value="${web-inf.dir}/lib" />
+
+	<property name="wornchaos.jar" value="../../wornchaos/build/wornchaos.jar" />
+	<property name="quedagh.jar" value="../quedagh/build/quedagh.jar" />
+	
+	<property file="build.properties"/>
+
+  	<import file="${gae.sdk.dir}/config/user/ant-macros.xml" />
+	
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+		<fileset dir="${web-lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<path id="classpath.gwt">
+		<path path="${src.dir}" />
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+		<fileset dir="${web-lib.dir}" includes="**/*.jar" />
+		<pathelement location="${classes.dir}" />
+		<path path="../../wornchaos/src" />
+		<path path="../quedagh/src" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${generated.dir}" />
+		<delete dir="${classes.dir}" />
+	</target>
+
+	<target name="jars.check">
+		<condition property="jars.exist">
+			<and>
+				<available file="${wornchaos.jar}" type="file" />
+				<available file="${quedagh.jar}" type="file" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="jars.acquire" depends="jars.check" if="jars.exist">
+		<copy todir="${web-lib.dir}" flatten="true" verbose="true">
+			<resources>
+				<file file="${wornchaos.jar}" />
+				<file file="${quedagh.jar}" />
+			</resources>
+		</copy>
+	</target>
+
+	<target name="compile" depends="jars.acquire">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}"
+			classpathref="classpath" />
+	</target>
+
+	<target name="compile.gwt" depends="compile">
+		<java classpathref="classpath.gwt" failonerror="true" fork="true"
+			maxmemory="512m" classname="com.google.gwt.dev.Compiler">
+			<arg line="-war ${war.dir}" />
+			<arg line="-workDir work" />
+			<arg line="-logLevel INFO" />
+			<arg line="-gen ${generated.dir}" />
+			<arg line="uk.ac.nott.mrl.quedagh.Quedagh" />
+		</java>
+	</target>
+
+	<target name="run.codeserver" depends="compile" description="Run GWT Codeserver">
+		<java classpathref="classpath.gwt" failonerror="true" fork="true"
+			maxmemory="512m" classname="com.google.gwt.dev.codeserver.CodeServer">		
+			<arg line="-src ${src.dir}" />
+			<arg line="-workDir work" />
+			<arg line="uk.ac.nott.mrl.quedagh.Quedagh" />
+		</java>
+	</target>
+	
+	<target name="war" depends="compile.gwt">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.war" basedir="${war.dir}" />
+	</target>
+	
+	<target name="update" depends="compile" description="Uploads the application to App Engine.">
+	    <appcfg action="update" war="${war.dir}">
+	        <options><arg value="--email=${gae.email}"/><arg value="--oauth2"/></options>
+	        </appcfg>
+	</target>	
+	
+	<target name="update.gwt" depends="compile.gwt, update" description="Compiles GWT and uploads">
+	</target>
+</project>

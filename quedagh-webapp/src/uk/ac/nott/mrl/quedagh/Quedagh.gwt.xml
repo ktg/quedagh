@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="quedagh">   
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.user.theme.clean.Clean" />
+	<inherits name="com.google.gwt.json.JSON" />
+	<inherits name="com.google.gwt.i18n.I18N" />
+	<inherits name="com.google.gwt.activity.Activity" />
+	<inherits name="com.google.gwt.place.Place" />
+
+	<inherits name='com.google.gwt.maps.Maps' />
+
+	<inherits name="com.googlecode.objectify.Objectify" />
+	
+	<inherits name="org.wornchaos.Utils" />
+
+	
+	
+	<entry-point class="uk.ac.nott.mrl.quedagh.client.Quedagh" />
+
+	<source path="client" />
+	<source path="model" />
+
+	<add-linker name="xsiframe"/>
+	
+	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
+	<set-configuration-property name="includeSourceMapUrl" value="false"/>
+	
+	<!-- enable source maps -->
+	
+	<set-property name="compiler.useSourceMaps" value="true" />
+</module>
