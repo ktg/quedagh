@@ -1,8 +1,8 @@
 package uk.ac.nott.mrl.quedagh.client.pages;
 
-import org.wornchaos.client.logger.Log;
 import org.wornchaos.client.ui.Page;
 import org.wornchaos.client.ui.ViewCallback;
+import org.wornchaos.logger.Log;
 import org.wornchaos.views.View;
 
 import uk.ac.nott.mrl.quedagh.client.Quedagh;

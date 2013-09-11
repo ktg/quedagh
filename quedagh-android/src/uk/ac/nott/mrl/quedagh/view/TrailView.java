@@ -3,6 +3,7 @@ package uk.ac.nott.mrl.quedagh.view;
 import java.util.EnumMap;
 import java.util.Map;
 
+import uk.ac.nott.mrl.quedagh.activities.PositionManager;
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Marker;
 import uk.ac.nott.mrl.quedagh.model.Position;
@@ -32,23 +33,27 @@ import com.google.android.gms.maps.model.VisibleRegion;
 
 public class TrailView extends View
 {
-	private String deviceID;
-
 	private final Paint fog;
-	private final Paint shade;
 	private final Paint path;
+	private final Paint debug;
+
+	private PositionManager positionManager;
 
 	private final Map<Colour, Paint> lines = new EnumMap<Colour, Paint>(Colour.class);
 
-	private Game game;
 	private GoogleMap map;
-	private Position location;
 
 	private String packageName;
 
 	public TrailView(final Context context, final AttributeSet attrs)
 	{
 		super(context, attrs);
+		
+		if (android.os.Build.VERSION.SDK_INT >= 11) 
+		{
+		     setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+		}
+		
 		fog = new Paint(Paint.ANTI_ALIAS_FLAG);
 		fog.setColor(Color.BLACK);
 		fog.setAlpha(128);
@@ -60,11 +65,11 @@ public class TrailView extends View
 		path.setAlpha(255);
 		path.setStyle(Style.FILL_AND_STROKE);
 
-		shade = new Paint(Paint.ANTI_ALIAS_FLAG);
-		shade.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-		shade.setColor(Color.BLACK);
-		shade.setAlpha(128);
-		shade.setStyle(Style.STROKE);
+		debug = new Paint();
+		debug.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+		debug.setColor(Color.BLACK);
+		debug.setAlpha(64);
+		debug.setStyle(Style.FILL_AND_STROKE);
 
 		final Paint blue = new Paint(Paint.ANTI_ALIAS_FLAG);
 		blue.setColor(Color.BLUE);
@@ -78,34 +83,6 @@ public class TrailView extends View
 
 	}
 
-	public boolean addExplored(final PositionLogItem position)
-	{
-		location = position;
-		if (game == null) { return false; }
-
-		final Team team = game.getTeam(deviceID);
-		if (team == null) { return false; }
-		team.setLastKnown(position);
-
-		invalidate();
-
-		return game.getExplored().add(position);
-	}
-
-	public void setDeviceID(final String deviceID)
-	{
-		this.deviceID = deviceID;
-	}
-
-	public void setGame(final Game game)
-	{
-		this.game = game;
-		if (location != null)
-		{
-			game.getExplored().add(location);
-		}
-	}
-
 	public void setMap(final GoogleMap map)
 	{
 		this.map = map;
@@ -116,16 +93,21 @@ public class TrailView extends View
 		this.packageName = packageName;
 	}
 
+	public void setPositionManager(final PositionManager manager)
+	{
+		positionManager = manager;
+	}
+
 	@Override
 	@SuppressLint("DrawAllocation")
 	protected void onDraw(final Canvas canvas)
 	{
 		super.onDraw(canvas);
 
-		canvas.drawPaint(fog);
-
+		final Game game = positionManager.getGame();
 		if (map == null || game == null)
 		{
+			final Location location = positionManager.getLocation();
 			if (location != null)
 			{
 				final Point point = map.getProjection().toScreenLocation(	new LatLng(location.getLatitude(), location
@@ -136,19 +118,41 @@ public class TrailView extends View
 			return;
 		}
 
-		final VisibleRegion bounds = map.getProjection().getVisibleRegion();
-
-		final float[] results = new float[1];
-		Location.distanceBetween(	bounds.farRight.latitude, bounds.farRight.longitude, bounds.farLeft.latitude,
-									bounds.farLeft.longitude, results);
-
-		final float radius = getWidth() / results[0] * game.getRadius();
-
-		for (final Position position : game.getExplored())
+		if (game.getExplored() != null && !game.getExplored().isEmpty())
 		{
-			final Point drawPoint = map.getProjection().toScreenLocation(	new LatLng(position.getLatitude(), position
-																					.getLongitude()));
-			canvas.drawCircle(drawPoint.x, drawPoint.y, radius, path);
+			canvas.drawPaint(fog);
+
+			final VisibleRegion bounds = map.getProjection().getVisibleRegion();
+
+			final float[] results = new float[1];
+			Location.distanceBetween(	bounds.farRight.latitude, bounds.farRight.longitude, bounds.farLeft.latitude,
+										bounds.farLeft.longitude, results);
+
+			final float radius = getWidth() / results[0] * game.getRadius();
+
+			for (final Position position : positionManager.getCurrent())
+			{
+				final Point drawPoint = map.getProjection().toScreenLocation(	new LatLng(position.getLatitude(),
+																						position.getLongitude()));
+				canvas.drawCircle(drawPoint.x, drawPoint.y, radius, debug);
+			}
+
+			if (positionManager.getPending() != null)
+			{
+				for (final Position position : positionManager.getPending())
+				{
+					final Point drawPoint = map.getProjection().toScreenLocation(	new LatLng(position.getLatitude(),
+																							position.getLongitude()));
+					canvas.drawCircle(drawPoint.x, drawPoint.y, radius, debug);
+				}
+			}
+
+			for (final Position position : game.getExplored())
+			{
+				final Point drawPoint = map.getProjection().toScreenLocation(	new LatLng(position.getLatitude(),
+																						position.getLongitude()));
+				canvas.drawCircle(drawPoint.x, drawPoint.y, radius, path);
+			}
 		}
 
 		for (final Team team : game.getTeams())
@@ -158,7 +162,8 @@ public class TrailView extends View
 				Point lastPoint = null;
 				for (final PositionLogItem item : team.getLog())
 				{
-					final Point point = map.getProjection().toScreenLocation(new LatLng(item.getLatitude(), item.getLongitude()));
+					final Point point = map.getProjection().toScreenLocation(	new LatLng(item.getLatitude(), item
+																						.getLongitude()));
 					if (lastPoint != null)
 					{
 						canvas.drawLine(lastPoint.x, lastPoint.y, point.x, point.y, lines.get(team.getColour()));
@@ -172,7 +177,8 @@ public class TrailView extends View
 		{
 			if (marker.getColour() != null)
 			{
-				final Point point = map.getProjection().toScreenLocation(new LatLng(marker.getLatitude(), marker.getLongitude()));
+				final Point point = map.getProjection().toScreenLocation(	new LatLng(marker.getLatitude(), marker
+																					.getLongitude()));
 				final Bitmap bitmap = getBitmap("marker", marker.getColour());
 				canvas.drawBitmap(bitmap, point.x - (bitmap.getWidth() / 2), point.y - bitmap.getHeight(), null);
 			}
@@ -180,10 +186,19 @@ public class TrailView extends View
 
 		for (final Team team : game.getTeams())
 		{
-			if (team.getLastKnown() != null)
+			if (team.getDevice().equals(positionManager.getDeviceID()) && positionManager.getLocation() != null)
 			{
-				final Point point = map.getProjection().toScreenLocation(	new LatLng(team.getLastKnown().getLatitude(),
-																					team.getLastKnown().getLongitude()));
+				final Point point = map.getProjection().toScreenLocation(	new LatLng(positionManager.getLocation()
+																					.getLatitude(), positionManager
+																					.getLocation().getLongitude()));
+				final Bitmap bitmap = getBitmap("bullet", team.getColour());
+				canvas.drawBitmap(bitmap, point.x - (bitmap.getWidth() / 2), point.y - (bitmap.getHeight() / 2), null);
+			}
+			else if (team.getLastKnown() != null)
+			{
+				final Point point = map.getProjection().toScreenLocation(	new LatLng(team.getLastKnown()
+																					.getLatitude(), team.getLastKnown()
+																					.getLongitude()));
 				final Bitmap bitmap = getBitmap("bullet", team.getColour());
 				canvas.drawBitmap(bitmap, point.x - (bitmap.getWidth() / 2), point.y - (bitmap.getHeight() / 2), null);
 			}

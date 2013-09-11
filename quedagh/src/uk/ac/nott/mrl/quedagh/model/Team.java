@@ -7,13 +7,11 @@ import java.util.List;
 import org.wornchaos.client.parser.ParseGroup;
 
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 @Entity
-@Cache
 public class Team
 {
 	public enum Colour
@@ -21,7 +19,7 @@ public class Team
 		blue, green, orange, pink, purple, red, white, yellow
 	}
 
-	private short value;
+	private int value;
 
 	@ParseGroup("none")
 	private Ref<Game> game;
@@ -50,7 +48,7 @@ public class Team
 		this.game = Ref.create(game);
 	}
 
-	Team()
+	public Team()
 	{
 
 	}
@@ -79,7 +77,7 @@ public class Team
 	{
 		return log;
 	}
-
+	
 	public void setLastKnown(PositionLogItem lastKnown)
 	{
 		this.lastKnown = lastKnown;
@@ -110,6 +108,10 @@ public class Team
 
 	public Game getGame()
 	{
+		if(game == null)
+		{
+			return null;
+		}
 		return game.get();
 	}
 
@@ -133,33 +135,35 @@ public class Team
 		this.distance = distance;
 	}
 
-	public void setValue(final short value)
+	public void setValue(final int value)
 	{
 		this.value = value;
 	}
 
-	public void updateDistance()
+	public void updateDistance(final long timestamp)
 	{
 		if(log == null || log.isEmpty())
 		{
 			return;
 		}		
-
+		
 		float dist = 0;
 		PositionLogItem last = null;
 		for (final PositionLogItem positionLog : log)
 		{
-			if (last != null)
+			if(timestamp != 0 && positionLog.getTime() > timestamp)
 			{
-				dist += last.getDistance(positionLog);
+				if (last != null)
+				{
+					dist += last.getDistance(positionLog);
+				}
+	
+				last = positionLog;
 			}
-
-			last = positionLog;
 		}
 
 		distance = dist;
-		
-		lastKnown = log.get(log.size() - 1);		
+		lastKnown = last;		
 	}
 
 	public String getId()

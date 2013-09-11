@@ -8,6 +8,8 @@
 	<property name="classes.dir" value="${web-inf.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}" />
 
+	<property name="work.dir" value="${build.dir}/gwt" />
+	
 	<property name="generated.dir" value="generated" />
 	
 	<property name="lib.dir" value="lib" />
@@ -15,6 +17,9 @@
 
 	<property name="wornchaos.jar" value="../../wornchaos/build/wornchaos.jar" />
 	<property name="quedagh.jar" value="../quedagh/build/quedagh.jar" />
+	
+	<property name="style" value="DETAILED" />
+	<property name="logging" value="INFO" />
 	
 	<property file="build.properties"/>
 
@@ -28,11 +33,14 @@
 
 	<path id="classpath.gwt">
 		<path path="${src.dir}" />
+		<path path="../quedagh/src" />		
+		<path path="../../wornchaos/src" />	
 		<fileset dir="${lib.dir}" includes="**/*.jar" />
-		<fileset dir="${web-lib.dir}" includes="**/*.jar" />
+		<fileset dir="${web-lib.dir}">
+			<include name="objectify-4.0rc1.jar" />
+   			<include name="wornchaos.jar" />
+		</fileset>
 		<pathelement location="${classes.dir}" />
-		<path path="../../wornchaos/src" />
-		<path path="../quedagh/src" />
 	</path>
 
 	<target name="clean">
@@ -68,19 +76,22 @@
 	<target name="compile.gwt" depends="compile">
 		<java classpathref="classpath.gwt" failonerror="true" fork="true"
 			maxmemory="512m" classname="com.google.gwt.dev.Compiler">
+			<sysproperty key="gwt.persistentunitcachedir" value="${work.dir}"/>			
 			<arg line="-war ${war.dir}" />
-			<arg line="-workDir work" />
-			<arg line="-logLevel INFO" />
+			<arg line="-workDir ${work.dir}" />
+			<arg line="-strict" />			
+			<arg line="-logLevel ${logging}" />
+			<arg line="-style ${style}" />			
 			<arg line="-gen ${generated.dir}" />
 			<arg line="uk.ac.nott.mrl.quedagh.Quedagh" />
 		</java>
 	</target>
-
+	
 	<target name="run.codeserver" depends="compile" description="Run GWT Codeserver">
 		<java classpathref="classpath.gwt" failonerror="true" fork="true"
 			maxmemory="512m" classname="com.google.gwt.dev.codeserver.CodeServer">		
 			<arg line="-src ${src.dir}" />
-			<arg line="-workDir work" />
+			<arg line="-workDir ${work.dir}" />
 			<arg line="uk.ac.nott.mrl.quedagh.Quedagh" />
 		</java>
 	</target>

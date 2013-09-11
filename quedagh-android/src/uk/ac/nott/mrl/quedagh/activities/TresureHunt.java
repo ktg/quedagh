@@ -1,13 +1,15 @@
 package uk.ac.nott.mrl.quedagh.activities;
 
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.wornchaos.client.server.AsyncCallback;
+import org.wornchaos.logger.Log;
 import org.wornchaos.server.JSONServerHandler;
+import org.wornchaos.server.ModifiedCallback;
 
 import uk.ac.nott.mrl.quedagh.R;
 import uk.ac.nott.mrl.quedagh.model.Game;
@@ -15,13 +17,13 @@ import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.QuedaghServer;
 import uk.ac.nott.mrl.quedagh.model.Team;
+import uk.ac.nott.mrl.quedagh.view.RelativeTouchableLayout;
 import uk.ac.nott.mrl.quedagh.view.TrailView;
 import android.app.Activity;
 import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,23 +41,21 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 public class TresureHunt extends Activity implements LocationListener, ConnectionCallbacks, OnConnectionFailedListener
 {
 	private GoogleMap map;
+	private static final boolean debug = true;
 	private boolean tracking = true;
 
 	private LinearLayout messagePanel;
 
 	private TrailView trailView;
 
-	private Collection<PositionLogItem> log = new ArrayList<PositionLogItem>();
-
-	private String deviceID;
-	
-	private final Timer timer = new Timer();
+	private Timer timer;
 
 	private QuedaghServer server;
 
@@ -75,6 +75,8 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 	// Define an object that holds accuracy and frequency parameters
 	LocationRequest locationRequest;
 	LocationClient locationClient;
+
+	private final PositionManager positionManager = new PositionManager();
 
 	/*
 	 * Called by Location Services when the request to connect the client finishes successfully. At
@@ -131,8 +133,8 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 
 		messagePanel = (LinearLayout) findViewById(R.id.messagePanel);
 
-		deviceID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-		
+		positionManager.setDeviceID(Secure.getString(getContentResolver(), Secure.ANDROID_ID));
+
 		server = (QuedaghServer) Proxy.newProxyInstance(QuedaghServer.class.getClassLoader(),
 														new Class[] { QuedaghServer.class }, new JSONServerHandler());
 		server.setHostURL("http://quedaghs.appspot.com/");
@@ -141,16 +143,36 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		map.getUiSettings().setCompassEnabled(true);
 		map.getUiSettings().setRotateGesturesEnabled(false);
-		map.getUiSettings().setScrollGesturesEnabled(false);
+		map.getUiSettings().setScrollGesturesEnabled(debug);
 		map.getUiSettings().setTiltGesturesEnabled(false);
 		map.getUiSettings().setZoomControlsEnabled(false);
-		map.getUiSettings().setZoomGesturesEnabled(false);
+		map.getUiSettings().setZoomGesturesEnabled(debug);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(52.90890204, -1.23046875), 18));
+		if (debug)
+		{
+			map.setOnMapClickListener(new OnMapClickListener()
+			{
+				@Override
+				public void onMapClick(final LatLng latlng)
+				{
+					removeLocationListener();
+					final Location location = new Location("MOCK");
+					location.setLatitude(latlng.latitude);
+					location.setLongitude(latlng.longitude);
+					location.setTime(new Date().getTime());
+					location.setAccuracy(2.0f);
+					onLocationChanged(location);
+				}
+			});
+		}
 
 		trailView = (TrailView) findViewById(R.id.trailView);
-		trailView.setDeviceID(deviceID);
 		trailView.setMap(map);
 		trailView.setPackageName(getPackageName());
+		trailView.setPositionManager(positionManager);
+
+		final RelativeTouchableLayout root = (RelativeTouchableLayout) findViewById(R.id.root);
+		root.setView(trailView);
 
 		locationRequest = LocationRequest.create();
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -158,42 +180,6 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		locationRequest.setFastestInterval(FASTEST_INTERVAL);
 
 		locationClient = new LocationClient(this, this, this);
-
-		timer.scheduleAtFixedRate(new TimerTask()
-		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					if (log.isEmpty()) { return; }
-					
-					final Collection<PositionLogItem> updates = log;
-					log = new ArrayList<PositionLogItem>();
-
-					server.update(deviceID, updates, new AsyncCallback<Game>()
-					{
-						@Override
-						public void onSuccess(final Game game)
-						{
-							trailView.setGame(game);
-							runOnUiThread(new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									handleUpdate(game);
-								}
-							});
-						}
-					});
-				}
-				catch (final Exception e)
-				{
-					Log.e("SendLog", e.getMessage(), e);
-				}
-			}
-		}, 0, 5000);
 	}
 
 	/*
@@ -210,15 +196,14 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 	@Override
 	public void onLocationChanged(final Location location)
 	{
-		if (tracking)
+		if (positionManager.addLocation(location))
 		{
-			map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+			if (tracking)
+			{
+				map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+			}
+			trailView.invalidate();
 		}
-
-		final PositionLogItem position = new PositionLogItem((float) location.getLatitude(),
-				(float) location.getLongitude(), location.getAccuracy());
-		log.add(position);
-		trailView.addExplored(position);
 	}
 
 	@Override
@@ -226,6 +211,56 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 	{
 		super.onStart();
 		locationClient.connect();
+
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
+					final Collection<PositionLogItem> updates = positionManager.getUpdates();
+					if (updates == null) { return; }
+
+					server.update(	positionManager.getDeviceID(), updates,
+									new ModifiedCallback<Game>(positionManager.getLastModified())
+									{
+										@Override
+										public void onFailure(final Throwable caught)
+										{
+											super.onFailure(caught);
+											positionManager.updateFailed();
+										}
+
+										@Override
+										public void onSuccess(final Game game)
+										{
+											if (game != null)
+											{
+												positionManager.setGame(game);
+												runOnUiThread(new Runnable()
+												{
+													@Override
+													public void run()
+													{
+														handleUpdate(game);
+													}
+												});
+											}
+											else
+											{
+												positionManager.clearPending();
+											}
+										}
+									});
+				}
+				catch (final Exception e)
+				{
+					Log.error(e.getMessage(), e);
+				}
+			}
+		}, 0, 5000);
 	}
 
 	@Override
@@ -233,6 +268,69 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 	{
 		timer.cancel();
 
+		removeLocationListener();
+		super.onStop();
+	}
+
+	private void addMessage(final Message message)
+	{
+		if (message.getResponse() != null)
+		{
+			final Button button = new Button(getApplicationContext());
+			button.setText(message.getText());
+			button.setTextSize(20);
+			button.setTextColor(0xFF000000);
+			button.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(final View v)
+				{
+					responseClick(message);
+				}
+			});
+
+			messagePanel.addView(button);
+		}
+		else
+		{
+
+			final TextView text = new TextView(getApplicationContext());
+			text.setTextColor(0xFF000000);
+			text.setTextSize(20);
+			text.setGravity(Gravity.CENTER);
+			text.setText(message.getText());
+
+			messagePanel.addView(text);
+		}
+	}
+
+	private void handleUpdate(final Game game)
+	{
+		final Team team = game.getTeam(positionManager.getDeviceID());
+		if ((team == null || team.getMessages().isEmpty())
+				&& (game.getMessages() == null || game.getMessages().isEmpty()))
+		{
+			messagePanel.setVisibility(View.INVISIBLE);
+		}
+		else
+		{
+			messagePanel.removeAllViewsInLayout();
+			for (final Message message : game.getMessages())
+			{
+				addMessage(message);
+			}
+
+			for (final Message message : team.getMessages())
+			{
+				addMessage(message);
+			}
+			messagePanel.setVisibility(View.VISIBLE);			
+		}
+		trailView.invalidate();
+	}
+
+	private void removeLocationListener()
+	{
 		// If the client is connected
 		if (locationClient.isConnected())
 		{
@@ -246,77 +344,31 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		 * After disconnect() is called, the client is considered "dead".
 		 */
 		locationClient.disconnect();
-		super.onStop();
-	}
-
-	private void handleUpdate(final Game update)
-	{
-		Team team = update.getTeam(deviceID);
-		if(team == null)
-		{
-			messagePanel.setVisibility(View.VISIBLE);
-			messagePanel.removeAllViewsInLayout();
-			
-			// TODO
-		}
-		else if (team.getMessages().isEmpty())
-		{
-			messagePanel.setVisibility(View.INVISIBLE);
-		}
-		else
-		{
-			messagePanel.setVisibility(View.VISIBLE);
-			messagePanel.removeAllViewsInLayout();
-
-			for (final Message message : team.getMessages())
-			{
-				if (message.getResponse() != null)
-				{
-					final Button button = new Button(getApplicationContext());
-					button.setText(message.getText());
-					button.setTextSize(20);
-					button.setTextColor(0xFF000000);
-					button.setOnClickListener(new OnClickListener()
-					{
-						@Override
-						public void onClick(final View v)
-						{
-							responseClick(message);
-						}
-					});
-
-					messagePanel.addView(button);
-				}
-				else
-				{
-
-					final TextView text = new TextView(getApplicationContext());
-					text.setTextColor(0xFF000000);
-					text.setTextSize(20);
-					text.setGravity(Gravity.CENTER);
-					text.setText(message.getText());
-
-					messagePanel.addView(text);
-				}
-			}
-		}
-		trailView.invalidate();
 	}
 
 	private void responseClick(final Message message)
 	{
 		final LinearLayout messagePanel = (LinearLayout) findViewById(R.id.messagePanel);
 		messagePanel.setVisibility(View.INVISIBLE);
-		server.respond(	Secure.getString(getContentResolver(), Secure.ANDROID_ID), message.getResponse(),
-						new AsyncCallback<Game>()
-						{
+		new Thread(new Runnable()
+		{
 
-							@Override
-							public void onSuccess(final Game arg0)
-							{
-								// TODO Auto-generated method stub
+			@Override
+			public void run()
+			{
+				server.respond(	Secure.getString(getContentResolver(), Secure.ANDROID_ID), message.getResponse(),
+								new AsyncCallback<Game>()
+								{
 
-							}
-						});
+									@Override
+									public void onSuccess(final Game arg0)
+									{
+										// TODO Auto-generated method stub
+
+									}
+								});
+
+			}
+		}).start();
 	}
 }

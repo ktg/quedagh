@@ -1,8 +1,12 @@
 package uk.ac.nott.mrl.quedagh.model.stages;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import org.wornchaos.client.server.ObjectStore;
+
 import uk.ac.nott.mrl.quedagh.model.Game;
+import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.Team;
 
@@ -20,9 +24,16 @@ public abstract class Stage
 	@Load
 	private Ref<Stage> next;
 
+	private Collection<Message> messages = new ArrayList<Message>();
+
 	Stage()
 	{
 
+	}
+
+	Stage(final Stage next)
+	{
+		this.next = Ref.create(next);
 	}
 
 	Stage(final String id)
@@ -36,9 +47,21 @@ public abstract class Stage
 		this.next = Ref.create(next);
 	}
 
+	Stage(final String id, final Stage next, final Collection<Message> messages)
+	{
+		this.id = id;
+		this.next = Ref.create(next);
+		this.messages = messages;
+	}
+
 	public String getId()
 	{
 		return id;
+	}
+
+	public Collection<Message> getMessages()
+	{
+		return messages;
 	}
 
 	public Stage getNext()
@@ -46,7 +69,7 @@ public abstract class Stage
 		return next.get();
 	}
 
-	public void response(final Team team, final String response)
+	public void response(Game game, final Team team, final String response, final ObjectStore store)
 	{
 	}
 
@@ -55,20 +78,34 @@ public abstract class Stage
 		this.id = id;
 	}
 
-	public void setNext(final Ref<Stage> next)
-	{
-		this.next = next;
-	}
-
 	public void setNext(final Stage next)
 	{
 		this.next = Ref.create(next);
 	}
 
-	public void start(final Game game)
+	public void setupTeam(Game game, Team team)
 	{
-
+		team.getMessages().clear();
 	}
 
-	public abstract void update(Team team, Collection<PositionLogItem> log);
+	protected Stage nextStage(final Game game, final ObjectStore store)
+	{
+		final Stage next = getNext(); 
+		game.setStage(next);
+		store.store(game);
+		return next;
+	}
+	
+	public void start(final Game game)
+	{
+		for (final Team team : game.getTeams())
+		{
+			setupTeam(game, team);
+		}
+
+		game.getMessages().clear();
+		game.getMessages().addAll(messages);
+	}
+
+	public abstract void update(Game game, Team team, Collection<PositionLogItem> log, final ObjectStore store);
 }

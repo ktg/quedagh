@@ -16,7 +16,7 @@ public interface QuedaghServer extends JSONServer
 	@Request(value = "games", cache = Cache.RESULT)
 	public void getGames(final AsyncCallback<Iterable<Game>> response);
 
-	@Request(value = "game", cache = Cache.RESULT)
+	@Request(value = "game", cache = Cache.RESULT, parseGroup = "logs")
 	public void getGame(@Named("id") final String id, final AsyncCallback<Game> response);
 	
 	@Request(value = "createGame", cache = Cache.RESULT)

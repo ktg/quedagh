@@ -7,12 +7,12 @@ import com.googlecode.objectify.annotation.Embed;
 @Embed
 public class Marker extends Position
 {
-	private Short value = null;
+	private Integer value = null;
 	private Colour colour = null;
 
-	public Marker(final Colour colour, final float latitude, final float longitude)
+	public Marker(final Colour colour, final float lat, final float lng)
 	{
-		super(latitude, longitude);
+		super(lat, lng);
 		this.colour = colour;
 	}
 
@@ -31,7 +31,7 @@ public class Marker extends Position
 		return colour;
 	}
 
-	public Short getValue()
+	public Integer getValue()
 	{
 		return value;
 	}
@@ -41,7 +41,7 @@ public class Marker extends Position
 		colour = device;
 	}
 
-	public void setValue(final Short value)
+	public void setValue(final Integer value)
 	{
 		this.value = value;
 	}

@@ -1,6 +1,9 @@
 package uk.ac.nott.mrl.quedagh.model.stages;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
+import org.wornchaos.client.server.ObjectStore;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Message;
@@ -12,18 +15,16 @@ import com.googlecode.objectify.annotation.EntitySubclass;
 @EntitySubclass
 public class Staging extends Stage
 {
-	private String message;
+	private Collection<Message> adminMessages = new ArrayList<Message>();
 
-	public Staging(final String id, final String message)
+	public Staging(final String id)
 	{
 		super(id);
-		this.message = message;
 	}
 
-	public Staging(final String id, final String message, final Stage next)
+	public Staging(final String id, final Stage next)
 	{
 		super(id, next);
-		this.message = message;
 	}
 
 	Staging()
@@ -31,36 +32,29 @@ public class Staging extends Stage
 
 	}
 
-	public String getMessage()
+	public Collection<Message> getAdminMessages()
 	{
-		return message;
+		return adminMessages;
 	}
 
 	@Override
-	public void response(final Team team, final String response)
+	public void response(Game game, final Team team, final String response, final ObjectStore store)
 	{
-		final Game game = team.getGame();
-		// TODO Asserts, etc
-		for (final Team ateam : game.getTeams())
-		{
-			ateam.getMessages().clear();
-		}
-		game.setStage(getNext());
-	}
-
-	public void setMessage(final String message)
-	{
-		this.message = message;
+		nextStage(game, store);
 	}
 
 	@Override
-	public void update(final Team team, final Collection<PositionLogItem> log)
+	public void setupTeam(Game game, final Team team)
 	{
 		team.getMessages().clear();
-		team.getMessages().add(new Message(message));
 		if (team.isAdmin())
 		{
-			team.getMessages().add(new Message("Start", "start"));
+			team.getMessages().addAll(adminMessages);
 		}
+	}
+
+	@Override
+	public void update(Game game, final Team team, final Collection<PositionLogItem> log, final ObjectStore store)
+	{
 	}
 }

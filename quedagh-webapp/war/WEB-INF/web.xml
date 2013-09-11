@@ -23,7 +23,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		</init-param>
 		<init-param>
 			<param-name>parserFactory</param-name>
-			<param-value>org.wornchaos.gson.GsonParserFactory</param-value>
+			<param-value>org.wornchaos.parser.gson.GsonParserFactory</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
