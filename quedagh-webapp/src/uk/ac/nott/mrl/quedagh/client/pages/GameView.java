@@ -12,6 +12,7 @@ import org.wornchaos.client.ui.ViewCallback;
 import org.wornchaos.views.View;
 
 import uk.ac.nott.mrl.quedagh.client.Quedagh;
+import uk.ac.nott.mrl.quedagh.client.views.MarkerView;
 import uk.ac.nott.mrl.quedagh.client.views.TeamInfoView;
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.GameEvent;
@@ -47,7 +48,7 @@ public class GameView extends Page implements View<Game>
 	private static final DateTimeFormat formatter = DateTimeFormat.getFormat("h:mm:ss a");
 
 	private MapWidget mapWidget;
-	private Collection<Marker> markers = new ArrayList<Marker>();
+	private Map<uk.ac.nott.mrl.quedagh.model.Marker, MarkerView> markers = new HashMap<uk.ac.nott.mrl.quedagh.model.Marker, MarkerView>();
 
 	private String id;
 	private long lastModified;
@@ -82,30 +83,18 @@ public class GameView extends Page implements View<Game>
 
 		lastModified = item.getModified();
 
-		for (final Marker marker : markers)
-		{
-			marker.clear();
-		}
-
-		markers.clear();
-
 		for (final uk.ac.nott.mrl.quedagh.model.Marker marker : item.getMarkers())
 		{
-			final LatLng latlng = LatLng.newInstance(marker.getLatitude(), marker.getLongitude());
-			final MarkerOptions options = MarkerOptions.newInstance();
-			options.setPosition(latlng);
-			options.setMap(mapWidget);
-			if (marker.getColour() != null)
+			final MarkerView view = markers.get(marker);
+			if(view != null)
 			{
-				options.setIcon(MarkerImage.newInstance("/images/markers/marker_" + marker.getColour().name() + ".png"));
+				view.itemChanged(marker);
 			}
 			else
 			{
-				options.setIcon(MarkerImage.newInstance("/images/markers/marker_grey.png"));
+				final MarkerView newView = new MarkerView(mapWidget, marker);
+				markers.put(marker, newView);
 			}
-			final Marker amarker = Marker.newInstance(options);
-
-			markers.add(amarker);
 		}
 
 		long oldest = Long.MAX_VALUE;
