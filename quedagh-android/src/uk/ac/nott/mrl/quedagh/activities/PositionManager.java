@@ -2,9 +2,11 @@ package uk.ac.nott.mrl.quedagh.activities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
+import uk.ac.nott.mrl.quedagh.model.Team;
 import android.location.Location;
 
 public class PositionManager
@@ -15,9 +17,10 @@ public class PositionManager
 	
 	private Game game;
 	private Location currentBestLocation;
+	private PositionLogItem currentBestPosition;
 	
-	private Collection<PositionLogItem> current = new ArrayList<PositionLogItem>();
-	private Collection<PositionLogItem> pending;
+	private List<PositionLogItem> current = new ArrayList<PositionLogItem>();
+	private List<PositionLogItem> pending;
 
 	public boolean addLocation(final Location location)
 	{
@@ -27,6 +30,8 @@ public class PositionManager
 					(float) location.getLongitude(), location.getTime(), location.getAccuracy());
 			current.add(position);
 			currentBestLocation = location;
+			currentBestPosition = position;
+			updateLastKnown();
 			return true;
 		}
 		return false;
@@ -44,6 +49,8 @@ public class PositionManager
 	public void setDeviceID(final String deviceID)
 	{
 		this.deviceID = deviceID;
+		currentBestLocation = null;
+		currentBestPosition = null;
 	}
 	
 	public String getDeviceID()
@@ -148,7 +155,20 @@ public class PositionManager
 	public void setGame(Game game)
 	{
 		pending = null;
-		this.game = game;		
+		this.game = game;
+		updateLastKnown();
+	}
+	
+	private void updateLastKnown()
+	{
+		if(game != null && currentBestPosition != null)
+		{
+			Team team = game.getTeam(deviceID);
+			if(team != null)
+			{
+				team.setLastKnown(currentBestPosition);
+			}
+		}
 	}
 
 	public void updateFailed()
@@ -161,5 +181,14 @@ public class PositionManager
 	public void clearPending()
 	{
 		pending = null;		
+	}
+
+	public String getGameID()
+	{
+		if(game == null)
+		{
+			return null;
+		}
+		return game.getId();
 	}
 }

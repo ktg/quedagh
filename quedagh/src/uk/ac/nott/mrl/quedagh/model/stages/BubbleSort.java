@@ -2,6 +2,7 @@ package uk.ac.nott.mrl.quedagh.model.stages;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Marker;
+import uk.ac.nott.mrl.quedagh.model.Swap;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
@@ -22,27 +23,25 @@ public class BubbleSort extends Sort
 	}
 
 	@Override
-	protected String findNextSwap(final Game game)
+	protected Swap findNextSwap(final Game game)
 	{
 		if (sortLength == 0)
 		{
 			sortLength = game.getMarkers().size() - 1;
 		}
-
-		while (sortLength > 1)
+			
+		while (sortLength > 0)
 		{
-			for (; index < sortLength; index++)
+			while(index < sortLength)
 			{
 				incComparisons();
 				final Marker marker1 = game.getMarkers().get(index);
 				final Marker marker2 = game.getMarkers().get(index + 1);
-				if (marker1 != null && marker1.getValue() > marker2.getValue())
+				if (comparator.compare(marker1, marker2) > 0)
 				{
-					final int value1 = marker1.getValue();
-					marker1.setValue(marker2.getValue());
-					marker2.setValue(value1);
-					return str(marker2.getValue()) + "<->" + str(marker1.getValue());
+					return new Swap(marker1.getValue(), marker2.getValue()); 
 				}
+				index++;				
 			}
 			index = 0;
 			sortLength--;

@@ -9,6 +9,7 @@ import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.Team;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
@@ -19,12 +20,12 @@ public class Staging extends Stage
 
 	public Staging(final String id)
 	{
-		super(id);
+		super(id, Draw.none);
 	}
 
 	public Staging(final String id, final Stage next)
 	{
-		super(id, next);
+		super(id, Draw.none, next);
 	}
 
 	Staging()
@@ -46,10 +47,9 @@ public class Staging extends Stage
 	@Override
 	public void setupTeam(Game game, final Team team)
 	{
-		team.getMessages().clear();
 		if (team.isAdmin())
 		{
-			team.getMessages().addAll(adminMessages);
+			team.postMessages(adminMessages);
 		}
 	}
 

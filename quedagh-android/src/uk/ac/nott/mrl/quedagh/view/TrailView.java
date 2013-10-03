@@ -5,6 +5,7 @@ import java.util.Map;
 
 import uk.ac.nott.mrl.quedagh.activities.PositionManager;
 import uk.ac.nott.mrl.quedagh.model.Game;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 import uk.ac.nott.mrl.quedagh.model.Marker;
 import uk.ac.nott.mrl.quedagh.model.Position;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.VisibleRegion;
 
 public class TrailView extends View
 {
+	private final Paint orderLine;	
 	private final Paint fog;
 	private final Paint path;
 	private final Paint debug;
@@ -62,7 +64,8 @@ public class TrailView extends View
 		path = new Paint(Paint.ANTI_ALIAS_FLAG);
 		path.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 		path.setColor(Color.BLACK);
-		path.setAlpha(255);
+		path.setStrokeWidth(5);		
+		path.setAlpha(128);
 		path.setStyle(Style.FILL_AND_STROKE);
 
 		debug = new Paint();
@@ -71,15 +74,63 @@ public class TrailView extends View
 		debug.setAlpha(64);
 		debug.setStyle(Style.FILL_AND_STROKE);
 
-		final Paint blue = new Paint(Paint.ANTI_ALIAS_FLAG);
-		blue.setColor(Color.BLUE);
-		blue.setAlpha(128);
-		blue.setStyle(Style.STROKE);
-		blue.setStrokeWidth(5);
-		blue.setStrokeCap(Cap.ROUND);
-		blue.setStrokeJoin(Join.ROUND);
+		orderLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+		orderLine.setColor(Color.BLACK);
+		orderLine.setAlpha(128);
+		orderLine.setStyle(Style.STROKE);
+		orderLine.setStrokeWidth(3);
+		
+		for(Colour colour: Colour.values())
+		{
+			final Paint colourLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+			switch(colour)
+			{
+				case blue:
+					colourLine.setColor(Color.BLUE);
+					break;
+					
+				case green:
+					colourLine.setColor(Color.GREEN);
+					break;				
+					
+				case red:
+					colourLine.setColor(Color.RED);
+					break;				
 
-		lines.put(Colour.blue, blue);
+				case yellow:
+					colourLine.setColor(Color.YELLOW);
+					break;	
+					
+				case white:
+					colourLine.setColor(Color.WHITE);
+					break;	
+					
+				case purple:
+					colourLine.setColor(Color.MAGENTA);
+					break;
+
+				case pink:
+					colourLine.setColor(0xffff8888);
+					break;					
+
+				case orange:
+					colourLine.setColor(0xffff8800);
+					break;					
+					
+				default:
+					colourLine.setColor(Color.BLACK);
+					break;
+			}
+			colourLine.setAlpha(128);
+			colourLine.setStyle(Style.STROKE);
+			colourLine.setStrokeWidth(5);
+			colourLine.setStrokeCap(Cap.ROUND);
+			colourLine.setStrokeJoin(Join.ROUND);
+			
+			lines.put(colour, colourLine);			
+		}
+		
+
 
 	}
 
@@ -104,6 +155,11 @@ public class TrailView extends View
 	{
 		super.onDraw(canvas);
 
+		if(positionManager == null)
+		{
+			return;
+		}
+		
 		final Game game = positionManager.getGame();
 		if (map == null || game == null)
 		{
@@ -118,7 +174,7 @@ public class TrailView extends View
 			return;
 		}
 
-		if (game.getExplored() != null && !game.getExplored().isEmpty())
+		if (game.getDraw() == Draw.explored)
 		{
 			canvas.drawPaint(fog);
 
@@ -147,14 +203,47 @@ public class TrailView extends View
 				}
 			}
 
-			for (final Position position : game.getExplored())
+			if(game.getExplored() != null)
 			{
-				final Point drawPoint = map.getProjection().toScreenLocation(	new LatLng(position.getLatitude(),
-																						position.getLongitude()));
-				canvas.drawCircle(drawPoint.x, drawPoint.y, radius, path);
+				for (final Position position : game.getExplored())
+				{
+					final Point drawPoint = map.getProjection().toScreenLocation(	new LatLng(position.getLatitude(),
+																							position.getLongitude()));
+					canvas.drawCircle(drawPoint.x, drawPoint.y, radius, path);
+				}
 			}
 		}
 
+		if(game.getDraw() == Draw.order)
+		{
+			final String order = game.getOrder();
+			Point firstMarker = null;
+			Point lastMarker = null;
+			for(int index = 0; index < order.length(); index++)
+			{
+				final int markerIndex = order.charAt(index) - 'A';
+				final Marker marker = game.getMarkers().get(markerIndex);
+				final Point markerPoint = map.getProjection().toScreenLocation(	new LatLng(marker.getLatitude(),
+																							marker.getLongitude()));
+				if(firstMarker == null)
+				{
+					firstMarker = markerPoint;
+				}
+				
+				if(lastMarker != null)
+				{
+					canvas.drawLine(lastMarker.x, lastMarker.y, markerPoint.x, markerPoint.y, orderLine);
+				}
+					
+				lastMarker = markerPoint;
+			}
+			
+			if(lastMarker != null && !lastMarker.equals(firstMarker))
+			{
+				canvas.drawLine(lastMarker.x, lastMarker.y, firstMarker.x, firstMarker.y, orderLine);
+			}
+		}
+		
 		for (final Team team : game.getTeams())
 		{
 			if (team.getLog() != null)
@@ -186,15 +275,7 @@ public class TrailView extends View
 
 		for (final Team team : game.getTeams())
 		{
-			if (team.getDevice().equals(positionManager.getDeviceID()) && positionManager.getLocation() != null)
-			{
-				final Point point = map.getProjection().toScreenLocation(	new LatLng(positionManager.getLocation()
-																					.getLatitude(), positionManager
-																					.getLocation().getLongitude()));
-				final Bitmap bitmap = getBitmap("bullet", team.getColour());
-				canvas.drawBitmap(bitmap, point.x - (bitmap.getWidth() / 2), point.y - (bitmap.getHeight() / 2), null);
-			}
-			else if (team.getLastKnown() != null)
+			if (team.getLastKnown() != null)
 			{
 				final Point point = map.getProjection().toScreenLocation(	new LatLng(team.getLastKnown()
 																					.getLatitude(), team.getLastKnown()

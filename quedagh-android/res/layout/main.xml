@@ -1,4 +1,5 @@
-<uk.ac.nott.mrl.quedagh.view.RelativeTouchableLayout android:id="@+id/root" xmlns:android="http://schemas.android.com/apk/res/android"
+<uk.ac.nott.mrl.quedagh.view.RelativeTouchableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -12,7 +13,7 @@
         android:id="@+id/trailView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    
+
     <LinearLayout
         android:id="@+id/messagePanel"
         android:layout_width="wrap_content"
@@ -34,4 +35,5 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black" />
     </LinearLayout>
+
 </uk.ac.nott.mrl.quedagh.view.RelativeTouchableLayout>

@@ -23,6 +23,11 @@ import com.googlecode.objectify.annotation.OnSave;
 @Entity
 public class Game
 {
+	public enum Draw
+	{
+		none, explored, order
+	}
+	
 	@Id
 	private String id;
 	private float radius = 10;
@@ -37,28 +42,13 @@ public class Game
 
 	private Collection<Message> messages = new ArrayList<Message>();
 
-	@ParseGroup({"logs"})
-	private List<Event> events = new ArrayList<Event>();
-	
+	@ParseGroup({ "logs" })
+	private List<GameEvent> events = new ArrayList<GameEvent>();
+
 	private long modified;
 	
-	@Modified
-	public long getModified()
-	{
-		return modified;
-	}
+	private Draw draw = Draw.none;
 	
-	public Collection<Message> getMessages()
-	{
-		return messages;
-	}
-	
-
-	public void setModified(long modified)
-	{
-		this.modified = modified;
-	}
-
 	@Load
 	@Index
 	@ParseGroup({ "complete" })
@@ -66,15 +56,11 @@ public class Game
 
 	private Collection<Position> explored = new HashSet<Position>();
 
-	public Team getTeam(final String device)
+	public void addMessage(final Message message)
 	{
-		for (final Ref<Team> team : teams)
-		{
-			if (team.get().getDevice().equals(device)) { return team.get(); }
-		}
-		return null;
+		messages.add(message);
 	}
-	
+
 	public Team createTeam(final String id, final String device)
 	{
 		for (final Ref<Team> team : teams)
@@ -93,13 +79,18 @@ public class Game
 		team.setDevice(device);
 
 		teams.add(Ref.create(team));
-		
-		if(stage != null)
+
+		if (stage != null)
 		{
 			getStage().setupTeam(this, team);
 		}
 
 		return team;
+	}
+
+	public List<GameEvent> getEvents()
+	{
+		return events;
 	}
 
 	public Collection<Position> getExplored()
@@ -114,10 +105,7 @@ public class Game
 
 	public Level getLevel()
 	{
-		if(level == null)
-		{
-			return null;
-		}
+		if (level == null) { return null; }
 		return level.get();
 	}
 
@@ -130,14 +118,48 @@ public class Game
 		return null;
 	}
 
+	public String getOrder()
+	{
+		String order = "";
+		int index = 0;
+		for (final Marker marker : getMarkers())
+		{
+			index++;
+			if(marker.getColour() == null)
+			{
+				continue;
+			}
+			if(marker.getValue() == null)
+			{
+				order = order + str(index);				
+			}
+			else
+			{
+				order = order + str(marker.getValue());
+			}
+		}
+		return order;
+	}
+	
+	public static final String str(final int value)
+	{
+		return new String(Character.toChars(value + 64));
+	}
+	
 	public List<Marker> getMarkers()
 	{
 		return markers;
 	}
-	
-	public List<Event> getEvents()
+
+	public Iterable<Message> getMessages()
 	{
-		return events;
+		return messages;
+	}
+
+	@Modified
+	public long getModified()
+	{
+		return modified;
 	}
 
 	public float getRadius()
@@ -147,16 +169,28 @@ public class Game
 
 	public Stage getStage()
 	{
-		if(stage == null)
-		{
-			return null;
-		}
+		if (stage == null) { return null; }
 		return stage.get();
+	}
+
+	public Team getTeam(final String device)
+	{
+		for (final Ref<Team> team : teams)
+		{
+			if (team.get().getDevice().equals(device)) { return team.get(); }
+		}
+		return null;
 	}
 
 	public Collection<Team> getTeams()
 	{
 		return new RefCollection<Team>(teams);
+	}
+
+	@OnSave
+	public void markChanged()
+	{
+		modified = new Date().getTime();
 	}
 
 	public Marker nearMarker(final Position position)
@@ -167,11 +201,45 @@ public class Game
 		}
 		return null;
 	}
-	
-	@OnSave
-	public void markChanged()
+
+	public void postMessages(final Iterable<Message> messages)
 	{
-		modified = new Date().getTime();
+		if ((messages == null || !messages.iterator().hasNext()) && this.messages.isEmpty()) { return; }
+		this.messages.clear();
+		final long time = new Date().getTime();
+		final String order = getOrder();
+		if(messages.iterator().hasNext())
+		{
+			for (final Message message : messages)
+			{
+				events.add(new GameEvent(time, order, message));
+				this.messages.add(message);
+			}
+		}
+		else
+		{
+			events.add(new GameEvent(time, order, null));
+		}
+	}
+
+	public void postMessages(final Message... messages)
+	{
+		if ((messages == null || messages.length == 0) && this.messages.isEmpty()) { return; }
+		this.messages.clear();
+		final long time = new Date().getTime();
+		final String order = getOrder();		
+		if(messages.length != 0)
+		{
+			for (final Message message : messages)
+			{
+				events.add(new GameEvent(time, order, message));
+				this.messages.add(message);
+			}
+		}
+		else
+		{
+			events.add(new GameEvent(time, order, null));
+		}
 	}
 
 	public void reset()
@@ -179,10 +247,9 @@ public class Game
 		explored.clear();
 		messages.clear();
 		events.clear();
-		for(Team team: getTeams())
+		for (final Team team : getTeams())
 		{
-			team.getMessages().clear();
-			team.getLog().clear();
+			team.reset();
 		}
 		setLevel(getLevel());
 	}
@@ -204,6 +271,11 @@ public class Game
 		setStage(level.getStart());
 	}
 
+	public void setModified(final long modified)
+	{
+		this.modified = modified;
+	}
+
 	public void setRadius(final float radius)
 	{
 		this.radius = radius;
@@ -212,10 +284,22 @@ public class Game
 	public void setStage(final Stage stage)
 	{
 		this.stage = Ref.create(stage);
-		if(stage != null)
-		{
-			events.add(new Event(stage.getClass().getName() + " started", new Date().getTime()));
-		}
+		draw = stage.getDraw();
 		stage.start(this);
+	}
+
+	public boolean hasNextStage()
+	{
+		return stage != null;
+	}
+
+	public Draw getDraw()
+	{
+		return draw;
+	}
+
+	public void setDraw(Draw draw)
+	{
+		this.draw = draw;
 	}
 }

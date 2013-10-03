@@ -1,7 +1,9 @@
 package uk.ac.nott.mrl.quedagh.model.stages;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 import org.wornchaos.client.server.ObjectStore;
@@ -12,6 +14,7 @@ import uk.ac.nott.mrl.quedagh.model.Marker;
 import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.Team;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
@@ -28,7 +31,7 @@ public class SortSetup extends Stage
 
 	public SortSetup(final String id, final Stage next, final SortType type)
 	{
-		super(id, next);
+		super(id, Draw.none, next);
 		this.type = type;
 	}
 
@@ -40,8 +43,7 @@ public class SortSetup extends Stage
 	@Override
 	public void setupTeam(final Game game, final Team team)
 	{
-		team.getMessages().clear();
-		team.getMessages().add(message);
+		team.postMessages(message);
 	}
 
 	@Override
@@ -49,33 +51,21 @@ public class SortSetup extends Stage
 	{
 		if (isFinished(game))
 		{
-			// Set up markers & teams
-			for (final Team ateam : game.getTeams())
+			setupMarkers(game);
+			
+			Log.info("Order = " + game.getOrder());
+			
+			while (inOrder(game.getMarkers()))
 			{
-				final Marker near = game.nearMarker(ateam.getLastKnown());
-				near.setValue(ateam.getValue());
-			}
-
-			int value = game.getTeams().size() + 1;
-			for (final Marker marker : game.getMarkers())
-			{
-				if (marker.getValue() == null)
+				randomizeMarkers(game.getMarkers());
+				for (final Team ateam : game.getTeams())
 				{
-					marker.setValue(value);
-					value++;
+					final Marker near = game.nearMarker(ateam.getLastKnown());
+					ateam.setValue(near.getValue());
 				}
+				Log.info("Order = " + game.getOrder());				
 			}
 
-			while (inOrder(game))
-			{
-				randomizeMarkers(game);
-			}
-
-			for (final Team ateam : game.getTeams())
-			{
-				final Marker near = game.nearMarker(ateam.getLastKnown());
-				ateam.setValue(near.getValue());
-			}
 			
 			Log.info(type.name() + " Sort");
 			if (type == SortType.Bubble)
@@ -95,19 +85,22 @@ public class SortSetup extends Stage
 		}
 		else
 		{
-			team.getMessages().clear();
 			final Marker near = game.nearMarker(team.getLastKnown());
 			if (near == null)
 			{
-				team.getMessages().add(message);
+				team.postMessages(message);
+			}
+			else
+			{
+				team.postMessages();
 			}
 		}
 	}
 
-	private boolean inOrder(final Game game)
+	private boolean inOrder(final Iterable<Marker> markers)
 	{
 		Marker last = null;
-		for (final Marker marker : game.getMarkers())
+		for (final Marker marker : markers)
 		{
 			if (last != null)
 			{
@@ -135,23 +128,41 @@ public class SortSetup extends Stage
 		return true;
 	}
 
-	private void randomizeMarkers(final Game game)
+	public void setupMarkers(final Game game)
 	{
-		for (final Marker marker : game.getMarkers())
+		// Set up markers & teams
+		final List<Marker> markers = new ArrayList<Marker>(game.getMarkers());
+		for (final Team ateam : game.getTeams())
 		{
-			marker.setValue(null);
+			final Marker near = game.nearMarker(ateam.getLastKnown());
+			near.setValue(ateam.getValue());
+			markers.remove(near);
 		}
+
+		int value = game.getTeams().size() + 1;
+		final Random random = new Random();			
+		while(!markers.isEmpty())
+		{
+			int mark = random.nextInt(markers.size());
+			Marker marker = markers.get(mark);
+			markers.remove(marker);
+			marker.setValue(value);
+			value++;
+		}
+	}
+	
+	private void randomizeMarkers(final List<Marker> originalList)
+	{
 		int value = 1;
-		final Random random = new Random();
-		while (value <= game.getMarkers().size())
+		final List<Marker> markers = new ArrayList<Marker>(originalList);		
+		final Random random = new Random();			
+		while(!markers.isEmpty())
 		{
-			final int rval = random.nextInt(game.getMarkers().size());
-			final Marker marker = game.getMarkers().get(rval);
-			if (marker.getValue() == null)
-			{
-				marker.setValue(value);
-				value++;
-			}
-		}
+			final int rval = random.nextInt(markers.size());
+			final Marker marker = markers.get(rval);
+			markers.remove(marker);
+			marker.setValue(value);
+			value++;
+		}		
 	}
 }

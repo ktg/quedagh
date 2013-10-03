@@ -2,8 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 	<g:FlowPanel>
-		<g:Button ui:field="create">Create Game</g:Button>
-
+		<g:FlowPanel ui:field="levels" />
 		<g:FlowPanel ui:field="games"/>
 	</g:FlowPanel>
 </ui:UiBinder>

@@ -2,7 +2,6 @@ package uk.ac.nott.mrl.quedagh.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import uk.ac.nott.mrl.quedagh.model.stages.Stage;
 
@@ -18,7 +17,7 @@ public class Level
 	private String id;
 
 	private String name;
-	private Collection<Position> markers = new HashSet<Position>();
+	private Collection<Position> markers = new ArrayList<Position>();
 	private Collection<Position> bounds = new ArrayList<Position>();
 
 	@Load

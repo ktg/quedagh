@@ -2,6 +2,7 @@ package uk.ac.nott.mrl.quedagh.model.stages;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Marker;
+import uk.ac.nott.mrl.quedagh.model.Swap;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
@@ -21,7 +22,7 @@ public class SelectionSort extends Sort
 	}
 
 	@Override
-	protected String findNextSwap(final Game game)
+	protected Swap findNextSwap(final Game game)
 	{
 		int index = 1;
 		int highIndex = 0;
@@ -36,7 +37,7 @@ public class SelectionSort extends Sort
 		{
 			incComparisons();
 			final Marker marker = game.getMarkers().get(index);
-			if (marker.getValue() > highest.getValue())
+			if (comparator.compare(marker, highest) > 0 )
 			{
 				highest = marker;
 				highIndex = index;
@@ -48,11 +49,7 @@ public class SelectionSort extends Sort
 		if (swapIndex == highIndex) { return findNextSwap(game); }
 
 		final Marker swapMarker = game.getMarkers().get(swapIndex);
-		final int value1 = highest.getValue();
-		highest.setValue(swapMarker.getValue());
-		swapMarker.setValue(value1);
-
-		return str(swapMarker.getValue()) + "<->" + str(highest.getValue());
+		return new Swap(swapMarker.getValue(), highest.getValue());
 	}
 
 	@Override

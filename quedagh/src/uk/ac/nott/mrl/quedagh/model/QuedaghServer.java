@@ -16,17 +16,20 @@ public interface QuedaghServer extends JSONServer
 	@Request(value = "games", cache = Cache.RESULT)
 	public void getGames(final AsyncCallback<Iterable<Game>> response);
 
+	@Request(value = "levels", cache = Cache.RESULT)
+	public void getLevels(final AsyncCallback<Iterable<Level>> response);
+	
 	@Request(value = "game", cache = Cache.RESULT, parseGroup = "logs")
 	public void getGame(@Named("id") final String id, final AsyncCallback<Game> response);
 	
 	@Request(value = "createGame", cache = Cache.RESULT)
-	public void createGame(final AsyncCallback<Game> response);
+	public void createGame(@Named("level") final String levelID, final AsyncCallback<Game> response);
 	
 	@Request(value = "reset", cache = Cache.RESULT)
-	public void reset(@Named("clean") final Boolean clean, final AsyncCallback<Iterable<Game>> response);
+	public void reset(@Named("game") final String gameID, final AsyncCallback<Iterable<Game>> response);
 	
 	@Request(value = "update", method = Method.POST)
-	public void update(@Named("device") final String device, @Named("logs") final Collection<PositionLogItem> logs, final AsyncCallback<Game> response);
+	public void update(@Named("game") String gameID, @Named("device") final String device, @Named("logs") final Collection<PositionLogItem> logs, final AsyncCallback<Game> response);
 	
 	@Request("respond")
 	public void respond(@Named("device") final String device, @Named("response") final String responseValue, final AsyncCallback<Game> response);

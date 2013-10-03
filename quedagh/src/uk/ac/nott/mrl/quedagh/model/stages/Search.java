@@ -7,6 +7,7 @@ import java.util.List;
 import org.wornchaos.client.server.ObjectStore;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 import uk.ac.nott.mrl.quedagh.model.Marker;
 import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
@@ -19,12 +20,12 @@ public class Search extends Stage
 {
 	public Search(final String id)
 	{
-		super(id);
+		super(id, Draw.explored);
 	}
 
 	public Search(final String id, final Stage next)
 	{
-		super(id, next);
+		super(id, Draw.explored, next);
 	}
 
 	Search()
@@ -42,8 +43,7 @@ public class Search extends Stage
 	@Override
 	public void setupTeam(Game game, Team team)
 	{
-		team.getMessages().clear();
-		team.getMessages().add(	new Message("Travelled " + Math.round(team.getDistance()) + "m: Found 0/"
+		team.postMessages(new Message("Travelled " + Math.round(team.getDistance()) + "m: Found 0/"
 										+ game.getMarkers().size()));
 	}
 
@@ -83,10 +83,18 @@ public class Search extends Stage
 		}
 		else
 		{
-			team.getMessages().clear();
-			team.getMessages().add(	new Message("Travelled " + Math.round(team.getDistance()) + "m: Found "
-											+ (game.getMarkers().size() - remaining.size()) + "/"
-											+ game.getMarkers().size()));
+			if(team.getDistance() > 1000)
+			{
+				team.postMessages(new Message("Travelled " + Math.round(team.getDistance() / 100) / 10.0 + "km: Found "
+						+ (game.getMarkers().size() - remaining.size()) + "/"
+						+ game.getMarkers().size()));				
+			}
+			else
+			{
+				team.postMessages(new Message("Travelled " + Math.round(team.getDistance()) + "m: Found "
+												+ (game.getMarkers().size() - remaining.size()) + "/"
+												+ game.getMarkers().size()));
+			}
 		}
 	}
 }

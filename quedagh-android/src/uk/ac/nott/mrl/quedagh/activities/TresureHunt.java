@@ -3,11 +3,10 @@ package uk.ac.nott.mrl.quedagh.activities;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.wornchaos.client.server.AsyncCallback;
 import org.wornchaos.logger.Log;
+import org.wornchaos.parser.gson.GsonParserFactory;
 import org.wornchaos.server.JSONServerHandler;
 import org.wornchaos.server.ModifiedCallback;
 
@@ -17,9 +16,15 @@ import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.QuedaghServer;
 import uk.ac.nott.mrl.quedagh.model.Team;
+import uk.ac.nott.mrl.quedagh.model.Team.Colour;
 import uk.ac.nott.mrl.quedagh.view.RelativeTouchableLayout;
 import uk.ac.nott.mrl.quedagh.view.TrailView;
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
@@ -45,7 +50,8 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-public class TresureHunt extends Activity implements LocationListener, ConnectionCallbacks, OnConnectionFailedListener
+public class TresureHunt extends Activity implements LocationListener, ConnectionCallbacks, OnConnectionFailedListener,
+		TabListener
 {
 	private GoogleMap map;
 	private static final boolean debug = true;
@@ -55,9 +61,15 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 
 	private TrailView trailView;
 
-	private Timer timer;
+	private Thread updateThread;
+
+	private boolean updating = true;
 
 	private QuedaghServer server;
+
+	private Object syncObject = new Object();
+	
+	private String[] devices;
 
 	// Milliseconds per second
 	private static final int MILLISECONDS_PER_SECOND = 1000;
@@ -123,20 +135,52 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		}
 	}
 
+	@SuppressLint("InlinedApi")
 	@Override
 	public void onCreate(final Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		final String deviceID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+
+		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+		final ActionBar actionBar = getActionBar();
+		if (debug)
+		{
+			// Set up the action bar to show tabs.
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+			devices = new String[5];
+
+			for (int index = 0; index < 5; index++)
+			{
+				actionBar.addTab(actionBar.newTab().setText("" + (index + 1)).setTabListener(this));
+
+				if (index == 0)
+				{
+					devices[index] = deviceID;
+				}
+				else
+				{
+					devices[index] = deviceID + "." + index;
+				}
+			}
+		}
+		else
+		{
+			actionBar.hide();
+		}
+
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		messagePanel = (LinearLayout) findViewById(R.id.messagePanel);
 
-		positionManager.setDeviceID(Secure.getString(getContentResolver(), Secure.ANDROID_ID));
+		positionManager.setDeviceID(deviceID);
 
 		server = (QuedaghServer) Proxy.newProxyInstance(QuedaghServer.class.getClassLoader(),
-														new Class[] { QuedaghServer.class }, new JSONServerHandler());
+														new Class[] { QuedaghServer.class }, new JSONServerHandler(new GsonParserFactory().create(null)));
 		server.setHostURL("http://quedaghs.appspot.com/");
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -203,7 +247,40 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 				map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
 			}
 			trailView.invalidate();
+			synchronized (syncObject)
+			{
+				syncObject.notifyAll();
+			}
 		}
+	}
+
+	@Override
+	public void onTabReselected(final Tab tab, final FragmentTransaction ft)
+	{
+	}
+
+	@Override
+	public void onTabSelected(final Tab tab, final FragmentTransaction ft)
+	{
+		final String device = devices[tab.getPosition()];
+		positionManager.setDeviceID(device);
+		final Game game = positionManager.getGame();
+		if (game != null)
+		{
+			handleUpdate(game);
+
+			final Team team = game.getTeam(device);
+			if (team != null && team.getLastKnown() != null)
+			{
+				map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(team.getLastKnown().getLatitude(), team
+						.getLastKnown().getLongitude())));
+			}
+		}
+	}
+
+	@Override
+	public void onTabUnselected(final Tab tab, final FragmentTransaction ft)
+	{
 	}
 
 	@Override
@@ -212,61 +289,67 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		super.onStart();
 		locationClient.connect();
 
-		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask()
+		updateThread = new Thread(new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				try
 				{
-					final Collection<PositionLogItem> updates = positionManager.getUpdates();
-					if (updates == null) { return; }
+					while (updating)
+					{
+						final Collection<PositionLogItem> updates = positionManager.getUpdates();
+						if (updates == null) { return; }
 
-					server.update(	positionManager.getDeviceID(), updates,
-									new ModifiedCallback<Game>(positionManager.getLastModified())
-									{
-										@Override
-										public void onFailure(final Throwable caught)
+						server.update(	positionManager.getGameID(), positionManager.getDeviceID(), updates,
+										new ModifiedCallback<Game>(positionManager.getLastModified())
 										{
-											super.onFailure(caught);
-											positionManager.updateFailed();
-										}
-
-										@Override
-										public void onSuccess(final Game game)
-										{
-											if (game != null)
+											@Override
+											public void onFailure(final Throwable caught)
 											{
-												positionManager.setGame(game);
-												runOnUiThread(new Runnable()
+												super.onFailure(caught);
+												positionManager.updateFailed();
+											}
+
+											@Override
+											public void onSuccess(final Game game)
+											{
+												if (game != null)
 												{
-													@Override
-													public void run()
+													positionManager.setGame(game);
+													runOnUiThread(new Runnable()
 													{
-														handleUpdate(game);
-													}
-												});
+														@Override
+														public void run()
+														{
+															handleUpdate(game);
+														}
+													});
+												}
+												else
+												{
+													positionManager.clearPending();
+												}
 											}
-											else
-											{
-												positionManager.clearPending();
-											}
-										}
-									});
+										});
+						synchronized(syncObject)
+						{
+							syncObject.wait(5000);
+						}
+					}
 				}
 				catch (final Exception e)
 				{
 					Log.error(e.getMessage(), e);
 				}
 			}
-		}, 0, 5000);
+		});
+		updateThread.start();
 	}
 
 	@Override
 	protected void onStop()
 	{
-		timer.cancel();
 
 		removeLocationListener();
 		super.onStop();
@@ -304,11 +387,48 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		}
 	}
 
+	private int getResource(final String prefix, final Colour colour)
+	{
+		String name = prefix + "_" + colour;
+		if (colour == null)
+		{
+			name = prefix + "_grey";
+		}
+		return getResources().getIdentifier(name, "drawable", getPackageName());
+	}
+
 	private void handleUpdate(final Game game)
 	{
+		final ActionBar actionBar = getActionBar();
+		for (int index = 0; index < devices.length; index++)
+		{
+			final Team team = game.getTeam(devices[index]);
+			if (team != null)
+			{
+				final Tab tab = actionBar.getTabAt(index);
+				if (tab != null)
+				{
+					tab.setIcon(getResource("bullet", team.getColour()));
+					tab.setText("Team " + Game.str(team.getValue()));
+				}
+			}
+		}
 		final Team team = game.getTeam(positionManager.getDeviceID());
-		if ((team == null || team.getMessages().isEmpty())
-				&& (game.getMessages() == null || game.getMessages().isEmpty()))
+		if (team == null)
+		{
+			messagePanel.setVisibility(View.VISIBLE);
+			messagePanel.removeAllViewsInLayout();
+
+			final TextView text = new TextView(getApplicationContext());
+			text.setTextColor(0xFF000000);
+			text.setTextSize(20);
+			text.setGravity(Gravity.CENTER);
+			text.setText("Waiting for connection...");
+
+			messagePanel.addView(text);
+			return;
+		}
+		if (!team.getMessages().iterator().hasNext() && !game.getMessages().iterator().hasNext())
 		{
 			messagePanel.setVisibility(View.INVISIBLE);
 		}
@@ -324,7 +444,7 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 			{
 				addMessage(message);
 			}
-			messagePanel.setVisibility(View.VISIBLE);			
+			messagePanel.setVisibility(View.VISIBLE);
 		}
 		trailView.invalidate();
 	}
@@ -363,11 +483,9 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 									@Override
 									public void onSuccess(final Game arg0)
 									{
-										// TODO Auto-generated method stub
 
 									}
 								});
-
 			}
 		}).start();
 	}

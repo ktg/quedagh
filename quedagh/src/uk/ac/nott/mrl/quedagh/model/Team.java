@@ -2,6 +2,7 @@ package uk.ac.nott.mrl.quedagh.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.wornchaos.client.parser.ParseGroup;
@@ -38,9 +39,12 @@ public class Team
 	
 	private PositionLogItem lastKnown;
 
-	@ParseGroup("logs")
+	@ParseGroup({"logs"})
 	private List<PositionLogItem> log = new ArrayList<PositionLogItem>();
 
+	@ParseGroup({"logs"})
+	private List<GameEvent> events = new ArrayList<GameEvent>();
+	
 	private Collection<Message> messages = new ArrayList<Message>();
 
 	public Team(final Game game)
@@ -53,6 +57,21 @@ public class Team
 
 	}
 
+	public Collection<GameEvent> getEvents()
+	{
+		return events;
+	}
+	
+	public void addMessage(Message message)
+	{
+		messages.add(message);
+	}
+	
+	public int getMessageCount()
+	{
+		return messages.size();
+	}
+	
 	public Colour getColour()
 	{
 		return colour;
@@ -83,11 +102,48 @@ public class Team
 		this.lastKnown = lastKnown;
 	}
 
-	public Collection<Message> getMessages()
+	public Iterable<Message> getMessages()
 	{
 		return messages;
 	}
 
+	public void postMessages(final Iterable<Message> messages)
+	{
+		if ((messages == null || !messages.iterator().hasNext()) && this.messages.isEmpty()) { return; }
+		this.messages.clear();
+		final long time = new Date().getTime();
+		if(messages.iterator().hasNext())
+		{
+			for (final Message message : messages)
+			{
+				events.add(new GameEvent(time, null, message));
+				this.messages.add(message);
+			}
+		}
+		else
+		{
+			events.add(new GameEvent(time, null, null));
+		}
+	}
+
+	public void postMessages(final Message... messages)
+	{
+		if ((messages == null || messages.length == 0) && this.messages.isEmpty()) { return; }
+		this.messages.clear();
+		final long time = new Date().getTime();	
+		if(messages.length != 0)
+		{
+			for (final Message message : messages)
+			{
+				events.add(new GameEvent(time, null, message));
+				this.messages.add(message);
+			}
+		}
+		else
+		{
+			events.add(new GameEvent(time, null, null));
+		}
+	}
 	public int getValue()
 	{
 		return value;
@@ -175,5 +231,12 @@ public class Team
 	{
 		this.id = id;
 		
+	}
+
+	void reset()
+	{
+		messages.clear();
+		events.clear();
+		log.clear();		
 	}
 }

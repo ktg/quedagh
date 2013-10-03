@@ -9,6 +9,7 @@ import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.Team;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -24,6 +25,8 @@ public abstract class Stage
 	@Load
 	private Ref<Stage> next;
 
+	private Draw draw;
+	
 	private Collection<Message> messages = new ArrayList<Message>();
 
 	Stage()
@@ -36,21 +39,30 @@ public abstract class Stage
 		this.next = Ref.create(next);
 	}
 
-	Stage(final String id)
+	Stage(final String id, final Draw draw)
 	{
 		this.id = id;
+		this.draw = draw;
 	}
 
-	Stage(final String id, final Stage next)
+	Stage(final String id, final Draw draw, final Stage next)
 	{
 		this.id = id;
-		this.next = Ref.create(next);
+		this.draw = draw;
+		if(next != null)
+		{
+			this.next = Ref.create(next);
+		}
 	}
 
-	Stage(final String id, final Stage next, final Collection<Message> messages)
+	Stage(final String id, final Draw draw, final Stage next, final Collection<Message> messages)
 	{
 		this.id = id;
-		this.next = Ref.create(next);
+		this.draw = draw;
+		if(next != null)
+		{
+			this.next = Ref.create(next);
+		}
 		this.messages = messages;
 	}
 
@@ -66,6 +78,10 @@ public abstract class Stage
 
 	public Stage getNext()
 	{
+		if(next == null)
+		{
+			return null;
+		}
 		return next.get();
 	}
 
@@ -85,7 +101,7 @@ public abstract class Stage
 
 	public void setupTeam(Game game, Team team)
 	{
-		team.getMessages().clear();
+		team.postMessages();
 	}
 
 	protected Stage nextStage(final Game game, final ObjectStore store)
@@ -103,9 +119,18 @@ public abstract class Stage
 			setupTeam(game, team);
 		}
 
-		game.getMessages().clear();
-		game.getMessages().addAll(messages);
+		game.postMessages(messages);
 	}
 
 	public abstract void update(Game game, Team team, Collection<PositionLogItem> log, final ObjectStore store);
+
+	public Draw getDraw()
+	{
+		return draw;
+	}
+
+	public void setDraw(Draw draw)
+	{
+		this.draw = draw;
+	}
 }
