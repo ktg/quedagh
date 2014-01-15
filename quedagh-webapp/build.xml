@@ -106,7 +106,13 @@
 	        <options><arg value="--email=${gae.email}"/><arg value="--oauth2"/></options>
 	        </appcfg>
 	</target>	
-	
+
+		<target name="rollback">
+	    <appcfg action="rollback" war="${war.dir}">
+	        <options><arg value="--email=${gae.email}"/><arg value="--oauth2"/></options>
+	        </appcfg>
+	</target>	
+		
 	<target name="update.gwt" depends="compile.gwt, update" description="Compiles GWT and uploads">
 	</target>
 </project>

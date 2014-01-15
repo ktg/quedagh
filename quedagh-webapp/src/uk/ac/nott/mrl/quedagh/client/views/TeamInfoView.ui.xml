@@ -5,19 +5,17 @@
 		.panel {
 			background: #DDD;
 			padding: 3px 5px;
-			border: 3px solid #FFF;
+			margin: 5px;
+			display: flex;
+			align-items: center;
 		}
 
-	    .inline {
-			display: inline;
-			vertical-align: middle;
-			margin-right: 5px;	
-		 }
+		.image {
+			margin-right: 10px;
+		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.panel}">
-	    <g:Image ui:field="marker" styleName="{style.inline}" />	    
-	    <g:Label ui:field="name" styleName="{style.inline}" />
+	    <g:Image ui:field="marker" styleName="{style.image}" />	    
 	    <g:FlowPanel ui:field="messages" />
-	    <g:Label ui:field="update" />
 	</g:FlowPanel>
 </ui:UiBinder>

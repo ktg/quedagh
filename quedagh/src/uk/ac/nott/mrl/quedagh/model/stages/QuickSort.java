@@ -1,19 +1,12 @@
 package uk.ac.nott.mrl.quedagh.model.stages;
 
-import org.wornchaos.logger.Log;
-
 import uk.ac.nott.mrl.quedagh.model.Game;
-import uk.ac.nott.mrl.quedagh.model.Marker;
-import uk.ac.nott.mrl.quedagh.model.Swap;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
 @EntitySubclass
 public class QuickSort extends Sort
 {
-	private int index = 0;
-	private int sortLength = 0;
-
 	public QuickSort(final String id, final Stage next)
 	{
 		super(id, next);
@@ -38,41 +31,54 @@ public class QuickSort extends Sort
 	// return 0;
 	// }
 
-	@Override
-	protected Swap findNextSwap(final Game game)
-	{
-		if (sortLength == 0)
-		{
-			sortLength = game.getMarkers().size() - 1;
-		}
-
-		Log.info("" + sortLength + "," + index);
-
-		while (sortLength > 0)
-		{
-			while (index < sortLength)
-			{
-				incComparisons();
-				final Marker marker1 = game.getMarkers().get(index);
-				final Marker marker2 = game.getMarkers().get(index + 1);
-				if (comparator.compare(marker1, marker2) > 0)
-				{
-					final int value1 = marker1.getValue();
-					marker1.setValue(marker2.getValue());
-					marker2.setValue(value1);
-					return new Swap(marker2.getValue(), marker1.getValue());
-				}
-				index++;
-			}
-			index = 0;
-			sortLength--;
-		}
-		return null;
-	}
+	// @Override
+	// protected Swap findNextSwap(final Game game)
+	// {
+	// if (sortLength == 0)
+	// {
+	// sortLength = game.getMarkers().size() - 1;
+	// }
+	//
+	// Log.info("" + sortLength + "," + index);
+	//
+	// while (sortLength > 0)
+	// {
+	// while (index < sortLength)
+	// {
+	// incComparisons();
+	// final Marker marker1 = game.getMarkers().get(index);
+	// final Marker marker2 = game.getMarkers().get(index + 1);
+	// if (comparator.compare(marker1, marker2) > 0)
+	// {
+	// final int value1 = marker1.getValue();
+	// marker1.setValue(marker2.getValue());
+	// marker2.setValue(value1);
+	// return new Swap(marker2.getValue(), marker1.getValue());
+	// }
+	// index++;
+	// }
+	// index = 0;
+	// sortLength--;
+	// }
+	// return null;
+	// }
 
 	@Override
 	protected String getSortName()
 	{
 		return "Bubble";
+	}
+
+	@Override
+	protected String getStep()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void nextStep(final Game game)
+	{
+		// TODO Auto-generated method stub
 	}
 }

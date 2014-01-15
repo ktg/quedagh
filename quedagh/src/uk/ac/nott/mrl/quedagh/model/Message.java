@@ -7,6 +7,7 @@ public class Message
 {
 	private String text;
 	private String response;
+	private boolean admin = false;
 
 	public Message()
 	{
@@ -23,6 +24,13 @@ public class Message
 		this.text = text;
 		this.response = response;
 	}
+	
+	public Message(final String text, final String response, final boolean admin)
+	{
+		this.text = text;
+		this.response = response;
+		this.setAdmin(admin);
+	}	
 
 	public String getResponse()
 	{
@@ -42,5 +50,15 @@ public class Message
 	public void setText(final String text)
 	{
 		this.text = text;
+	}
+
+	public boolean isAdmin()
+	{
+		return admin;
+	}
+
+	public void setAdmin(boolean admin)
+	{
+		this.admin = admin;
 	}
 }

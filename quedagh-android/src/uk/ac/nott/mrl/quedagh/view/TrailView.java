@@ -3,6 +3,7 @@ package uk.ac.nott.mrl.quedagh.view;
 import java.util.EnumMap;
 import java.util.Map;
 
+import uk.ac.nott.mrl.quedagh.R;
 import uk.ac.nott.mrl.quedagh.activities.PositionManager;
 import uk.ac.nott.mrl.quedagh.model.Game;
 import uk.ac.nott.mrl.quedagh.model.Game.Draw;
@@ -34,10 +35,11 @@ import com.google.android.gms.maps.model.VisibleRegion;
 
 public class TrailView extends View
 {
-	private final Paint orderLine;	
+	private final Paint orderLine;
 	private final Paint fog;
 	private final Paint path;
 	private final Paint debug;
+	private final Paint text;
 
 	private PositionManager positionManager;
 
@@ -50,12 +52,12 @@ public class TrailView extends View
 	public TrailView(final Context context, final AttributeSet attrs)
 	{
 		super(context, attrs);
-		
-		if (android.os.Build.VERSION.SDK_INT >= 11) 
+
+		if (android.os.Build.VERSION.SDK_INT >= 11)
 		{
-		     setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		}
-		
+
 		fog = new Paint(Paint.ANTI_ALIAS_FLAG);
 		fog.setColor(Color.BLACK);
 		fog.setAlpha(128);
@@ -64,7 +66,7 @@ public class TrailView extends View
 		path = new Paint(Paint.ANTI_ALIAS_FLAG);
 		path.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 		path.setColor(Color.BLACK);
-		path.setStrokeWidth(5);		
+		path.setStrokeWidth(5);
 		path.setAlpha(128);
 		path.setStyle(Style.FILL_AND_STROKE);
 
@@ -80,43 +82,48 @@ public class TrailView extends View
 		orderLine.setStyle(Style.STROKE);
 		orderLine.setStrokeWidth(3);
 		
-		for(Colour colour: Colour.values())
+		text = new Paint(Paint.ANTI_ALIAS_FLAG); 
+		text.setColor(Color.BLACK); 
+		text.setStyle(Style.FILL); 
+		text.setTextSize(38);
+
+		for (final Colour colour : Colour.values())
 		{
 			final Paint colourLine = new Paint(Paint.ANTI_ALIAS_FLAG);
-			switch(colour)
+			switch (colour)
 			{
 				case blue:
 					colourLine.setColor(Color.BLUE);
 					break;
-					
+
 				case green:
 					colourLine.setColor(Color.GREEN);
-					break;				
-					
+					break;
+
 				case red:
 					colourLine.setColor(Color.RED);
-					break;				
+					break;
 
 				case yellow:
 					colourLine.setColor(Color.YELLOW);
-					break;	
-					
+					break;
+
 				case white:
 					colourLine.setColor(Color.WHITE);
-					break;	
-					
+					break;
+
 				case purple:
 					colourLine.setColor(Color.MAGENTA);
 					break;
 
 				case pink:
 					colourLine.setColor(0xffff8888);
-					break;					
+					break;
 
 				case orange:
 					colourLine.setColor(0xffff8800);
-					break;					
-					
+					break;
+
 				default:
 					colourLine.setColor(Color.BLACK);
 					break;
@@ -126,11 +133,9 @@ public class TrailView extends View
 			colourLine.setStrokeWidth(5);
 			colourLine.setStrokeCap(Cap.ROUND);
 			colourLine.setStrokeJoin(Join.ROUND);
-			
-			lines.put(colour, colourLine);			
-		}
-		
 
+			lines.put(colour, colourLine);
+		}
 
 	}
 
@@ -155,11 +160,8 @@ public class TrailView extends View
 	{
 		super.onDraw(canvas);
 
-		if(positionManager == null)
-		{
-			return;
-		}
-		
+		if (positionManager == null) { return; }
+
 		final Game game = positionManager.getGame();
 		if (map == null || game == null)
 		{
@@ -203,7 +205,7 @@ public class TrailView extends View
 				}
 			}
 
-			if(game.getExplored() != null)
+			if (game.getExplored() != null)
 			{
 				for (final Position position : game.getExplored())
 				{
@@ -214,36 +216,36 @@ public class TrailView extends View
 			}
 		}
 
-		if(game.getDraw() == Draw.order)
+		if (game.getDraw() == Draw.order)
 		{
-			final String order = game.getOrder();
+			final String order = game.getState();
 			Point firstMarker = null;
 			Point lastMarker = null;
-			for(int index = 0; index < order.length(); index++)
+			for (int index = 0; index < order.length(); index++)
 			{
 				final int markerIndex = order.charAt(index) - 'A';
 				final Marker marker = game.getMarkers().get(markerIndex);
-				final Point markerPoint = map.getProjection().toScreenLocation(	new LatLng(marker.getLatitude(),
-																							marker.getLongitude()));
-				if(firstMarker == null)
+				final Point markerPoint = map.getProjection().toScreenLocation(	new LatLng(marker.getLatitude(), marker
+																						.getLongitude()));
+				if (firstMarker == null)
 				{
 					firstMarker = markerPoint;
 				}
-				
-				if(lastMarker != null)
+
+				if (lastMarker != null)
 				{
 					canvas.drawLine(lastMarker.x, lastMarker.y, markerPoint.x, markerPoint.y, orderLine);
 				}
-					
+
 				lastMarker = markerPoint;
 			}
-			
-			if(lastMarker != null && !lastMarker.equals(firstMarker))
+
+			if (lastMarker != null && !lastMarker.equals(firstMarker))
 			{
 				canvas.drawLine(lastMarker.x, lastMarker.y, firstMarker.x, firstMarker.y, orderLine);
 			}
 		}
-		
+
 		for (final Team team : game.getTeams())
 		{
 			if (team.getLog() != null)
@@ -262,6 +264,19 @@ public class TrailView extends View
 			}
 		}
 
+		if (game.getDraw() == Draw.order)
+		{
+			if (game.getComparison() != null)
+			{
+				final Point point = map.getProjection().toScreenLocation(	new LatLng(game.getComparison()
+																					.getLatitude(), game
+																					.getComparison().getLongitude()));
+				final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.center_flag);
+				canvas.drawBitmap(bitmap, point.x - 2, point.y - bitmap.getHeight(), null);
+			}
+		}
+
+		int index = 1;
 		for (final Marker marker : game.getMarkers())
 		{
 			if (marker.getColour() != null)
@@ -270,7 +285,15 @@ public class TrailView extends View
 																					.getLongitude()));
 				final Bitmap bitmap = getBitmap("marker", marker.getColour());
 				canvas.drawBitmap(bitmap, point.x - (bitmap.getWidth() / 2), point.y - bitmap.getHeight(), null);
+				
+				if(game.getDraw() == Draw.order)
+				{
+					String integer = "" + index;
+					float width = text.measureText(integer);
+					canvas.drawText(integer, point.x - (width / 2) , point.y - bitmap.getHeight() + text.getTextSize(), text);
+				}
 			}
+			index++;
 		}
 
 		for (final Team team : game.getTeams())

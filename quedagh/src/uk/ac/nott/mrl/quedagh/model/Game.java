@@ -7,8 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.wornchaos.client.objectify.RefCollection;
-import org.wornchaos.client.parser.ParseGroup;
 import org.wornchaos.client.server.Modified;
+import org.wornchaos.client.server.ParseExclude;
+import org.wornchaos.logger.Log;
 
 import uk.ac.nott.mrl.quedagh.model.Team.Colour;
 import uk.ac.nott.mrl.quedagh.model.stages.Stage;
@@ -27,13 +28,19 @@ public class Game
 	{
 		none, explored, order
 	}
-	
+
+	public static final String str(final int value)
+	{
+		return new String(Character.toChars(value + 64));
+	}
+
 	@Id
 	private String id;
+
 	private float radius = 10;
 
 	@Load
-	@ParseGroup({ "complete" })
+	@ParseExclude
 	private Ref<Level> level;
 
 	private List<Marker> markers = new ArrayList<Marker>();
@@ -42,16 +49,20 @@ public class Game
 
 	private Collection<Message> messages = new ArrayList<Message>();
 
-	@ParseGroup({ "logs" })
+	private Position comparison;
+
+	@Logs
 	private List<GameEvent> events = new ArrayList<GameEvent>();
 
 	private long modified;
-	
+
 	private Draw draw = Draw.none;
-	
+
+	private String state;
+
 	@Load
 	@Index
-	@ParseGroup({ "complete" })
+	@ParseExclude
 	private Ref<Stage> stage;
 
 	private Collection<Position> explored = new HashSet<Position>();
@@ -59,6 +70,11 @@ public class Game
 	public void addMessage(final Message message)
 	{
 		messages.add(message);
+	}
+
+	public boolean areNear(final Position position, final Position position2)
+	{
+		return position.getDistance(position2) < radius;
 	}
 
 	public Team createTeam(final String id, final String device)
@@ -69,11 +85,10 @@ public class Game
 		}
 
 		final Team team = new Team(this);
-		if (teams.size() == 0)
-		{
-			team.setAdmin(true);
-		}
-		team.setValue((short) (teams.size() + 1));
+//		if (teams.size() == 0)
+//		{
+//			team.setAdmin(true);
+//		}
 		team.setColour(Colour.values()[teams.size()]);
 		team.setId(id);
 		team.setDevice(device);
@@ -86,6 +101,16 @@ public class Game
 		}
 
 		return team;
+	}
+
+	public Position getComparison()
+	{
+		return comparison;
+	}
+
+	public Draw getDraw()
+	{
+		return draw;
 	}
 
 	public List<GameEvent> getEvents()
@@ -118,34 +143,6 @@ public class Game
 		return null;
 	}
 
-	public String getOrder()
-	{
-		String order = "";
-		int index = 0;
-		for (final Marker marker : getMarkers())
-		{
-			index++;
-			if(marker.getColour() == null)
-			{
-				continue;
-			}
-			if(marker.getValue() == null)
-			{
-				order = order + str(index);				
-			}
-			else
-			{
-				order = order + str(marker.getValue());
-			}
-		}
-		return order;
-	}
-	
-	public static final String str(final int value)
-	{
-		return new String(Character.toChars(value + 64));
-	}
-	
 	public List<Marker> getMarkers()
 	{
 		return markers;
@@ -155,7 +152,7 @@ public class Game
 	{
 		return messages;
 	}
-
+	
 	@Modified
 	public long getModified()
 	{
@@ -173,11 +170,23 @@ public class Game
 		return stage.get();
 	}
 
+	public String getState()
+	{
+		return state;
+	}
+
 	public Team getTeam(final String device)
 	{
 		for (final Ref<Team> team : teams)
 		{
-			if (team.get().getDevice().equals(device)) { return team.get(); }
+			try
+			{
+				if (team.get().getDevice().equals(device)) { return team.get(); }
+			}
+			catch(Exception e)
+			{
+				Log.error(e);
+			}
 		}
 		return null;
 	}
@@ -185,6 +194,22 @@ public class Game
 	public Collection<Team> getTeams()
 	{
 		return new RefCollection<Team>(teams);
+	}
+
+	public boolean hasNextStage()
+	{
+		return stage != null;
+	}
+
+	public boolean isInOrder()
+	{
+		char last = 0;
+		for (final char value : state.toCharArray())
+		{
+			if (last > value) { return false; }
+			last = value;
+		}
+		return true;
 	}
 
 	@OnSave
@@ -207,38 +232,45 @@ public class Game
 		if ((messages == null || !messages.iterator().hasNext()) && this.messages.isEmpty()) { return; }
 		this.messages.clear();
 		final long time = new Date().getTime();
-		final String order = getOrder();
-		if(messages.iterator().hasNext())
+		if (messages.iterator().hasNext())
 		{
 			for (final Message message : messages)
 			{
-				events.add(new GameEvent(time, order, message));
+				events.add(new GameEvent(time, state, getStageKey(), message));
 				this.messages.add(message);
 			}
 		}
 		else
 		{
-			events.add(new GameEvent(time, order, null));
+			events.add(new GameEvent(time, state, getStageKey(), null));
 		}
 	}
 
+	String getStageKey()
+	{
+		if(stage == null)
+		{
+			return null;
+		}
+		return stage.getKey().getName();
+	}
+	
 	public void postMessages(final Message... messages)
 	{
 		if ((messages == null || messages.length == 0) && this.messages.isEmpty()) { return; }
 		this.messages.clear();
 		final long time = new Date().getTime();
-		final String order = getOrder();		
-		if(messages.length != 0)
+		if (messages.length != 0)
 		{
 			for (final Message message : messages)
 			{
-				events.add(new GameEvent(time, order, message));
+				events.add(new GameEvent(time, state, getStageKey(), message));
 				this.messages.add(message);
 			}
 		}
 		else
 		{
-			events.add(new GameEvent(time, order, null));
+			events.add(new GameEvent(time, state, getStageKey(), null));
 		}
 	}
 
@@ -254,6 +286,16 @@ public class Game
 		setLevel(getLevel());
 	}
 
+	public void setComparison(final Position comparison)
+	{
+		this.comparison = comparison;
+	}
+
+	public void setDraw(final Draw draw)
+	{
+		this.draw = draw;
+	}
+
 	public void setId(final String id)
 	{
 		this.id = id;
@@ -261,8 +303,15 @@ public class Game
 
 	public void setLevel(final Level level)
 	{
-		this.level = Ref.create(level);
 		markers.clear();
+		if (level == null)
+		{
+			this.level = null;
+			return;
+		}
+		this.level = Ref.create(level);
+		setRadius(level.getRadius());
+		setComparison(level.getComparison());
 		for (final Position position : level.getMarkers())
 		{
 			markers.add(new Marker(position.getLatitude(), position.getLongitude()));
@@ -283,23 +332,20 @@ public class Game
 
 	public void setStage(final Stage stage)
 	{
-		this.stage = Ref.create(stage);
-		draw = stage.getDraw();
-		stage.start(this);
+		if(stage == null)
+		{
+			this.stage = null;
+		}
+		else
+		{
+			this.stage = Ref.create(stage);
+			draw = stage.getDraw();
+			stage.start(this);
+		}
 	}
 
-	public boolean hasNextStage()
+	public void setState(final String state)
 	{
-		return stage != null;
-	}
-
-	public Draw getDraw()
-	{
-		return draw;
-	}
-
-	public void setDraw(Draw draw)
-	{
-		this.draw = draw;
+		this.state = state;
 	}
 }

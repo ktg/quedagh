@@ -14,14 +14,14 @@ public class PositionLogItem extends Position
 	{
 		super(latitude, longitude);
 		time = new Date().getTime();
-		this.err = error;
+		err = error;
 	}
 
 	public PositionLogItem(final float latitude, final float longitude, final long time, final float error)
 	{
 		super(latitude, longitude);
 		this.time = time;
-		this.err = error;
+		err = error;
 	}
 
 	PositionLogItem()
@@ -29,23 +29,23 @@ public class PositionLogItem extends Position
 
 	}
 
-	public long getTime()
-	{
-		return time;
-	}
-
-	public void setTime(final long time)
-	{
-		this.time = time;
-	}
-
 	public float getError()
 	{
 		return err;
 	}
 
-	public void setError(float err)
+	public long getTime()
+	{
+		return time;
+	}
+
+	public void setError(final float err)
 	{
 		this.err = err;
+	}
+
+	public void setTime(final long time)
+	{
+		this.time = time;
 	}
 }

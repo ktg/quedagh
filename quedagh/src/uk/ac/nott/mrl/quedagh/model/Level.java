@@ -17,8 +17,12 @@ public class Level
 	private String id;
 
 	private String name;
+	private float radius;
 	private Collection<Position> markers = new ArrayList<Position>();
 	private Collection<Position> bounds = new ArrayList<Position>();
+	private String initOrder;
+
+	private Position comparison;
 
 	@Load
 	private Ref<Stage> start;
@@ -28,9 +32,19 @@ public class Level
 		return bounds;
 	}
 
+	public Position getComparison()
+	{
+		return comparison;
+	}
+
 	public String getId()
 	{
 		return id;
+	}
+
+	public String getInitOrder()
+	{
+		return initOrder;
 	}
 
 	public Collection<Position> getMarkers()
@@ -43,9 +57,19 @@ public class Level
 		return name;
 	}
 
+	public float getRadius()
+	{
+		return radius;
+	}
+
 	public Stage getStart()
 	{
 		return start.get();
+	}
+
+	public void setComparison(final Position comparison)
+	{
+		this.comparison = comparison;
 	}
 
 	public void setId(final String id)
@@ -53,9 +77,19 @@ public class Level
 		this.id = id;
 	}
 
+	public void setInitOrder(final String initOrder)
+	{
+		this.initOrder = initOrder;
+	}
+
 	public void setName(final String name)
 	{
 		this.name = name;
+	}
+
+	public void setRadius(final float radius)
+	{
+		this.radius = radius;
 	}
 
 	public void setStart(final Stage start)

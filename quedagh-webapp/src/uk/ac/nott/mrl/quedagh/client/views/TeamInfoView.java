@@ -107,16 +107,10 @@ public class TeamInfoView extends Composite implements View<Team>
 	}
 
 	@UiField
-	Label name;
-
-	@UiField
 	Image marker;
 
 	@UiField
 	Panel messages;
-
-	@UiField
-	Label update;
 
 	private long oldest;
 	private long newest;
@@ -136,7 +130,6 @@ public class TeamInfoView extends Composite implements View<Team>
 	public void itemChanged(final Team team)
 	{
 		this.team = team;
-		name.setText("Team " + team.getValue());
 		if (team.getColour() != null)
 		{
 			marker.setUrl("/images/markers/bullet_" + team.getColour().name() + ".png");
@@ -182,10 +175,29 @@ public class TeamInfoView extends Composite implements View<Team>
 				messages.add(getMessageWidget(team.getDevice(), message));
 			}
 		}
-
-		if (team.getLastKnown() != null)
+		
+		if(team.getLastKnown() != null)
 		{
-			update.setText("Last Update: " + getRelativeTime(team.getLastKnown().getTime()));
+			Label update = new Label("Updated " + getRelativeTime(team.getLastKnown().getTime()));
+			update.getElement().getStyle().setProperty("fontSize", "x-small");
+			update.getElement().getStyle().setColor("#555");
+			messages.add(update);
+		}
+		else if(!team.getEvents().isEmpty())
+		{
+			long lastTime = 0;
+			for(GameEvent event: team.getEvents())
+			{
+				lastTime = Math.max(lastTime, event.getTime());
+			}
+			
+			if(lastTime != 0)
+			{
+				Label update = new Label("Updated " + getRelativeTime(lastTime));
+				update.getElement().getStyle().setProperty("font-size", "x-small");
+				update.getElement().getStyle().setColor("#555");
+				messages.add(update);				
+			}
 		}
 	}
 
@@ -204,7 +216,7 @@ public class TeamInfoView extends Composite implements View<Team>
 		newest = Long.MIN_VALUE;
 		
 		final MVCArray<LatLng> points = MVCArray.newInstance();
-		PositionLogItem last = team.getLastKnown();
+		PositionLogItem last = null;
 		for (final PositionLogItem logItem : team.getLog())
 		{
 			oldest = Math.min(oldest, logItem.getTime());
@@ -218,9 +230,16 @@ public class TeamInfoView extends Composite implements View<Team>
 			}
 		}
 		
-		if(last != null && last.getTime() != lastTime)
+		if(last == null || last.getTime() != lastTime)
 		{
-			lastTime = last.getTime();
+			if(last != null)
+			{
+				lastTime = last.getTime();
+			}
+			else
+			{
+				lastTime = 0;
+			}
 			return points;
 		}
 		return null;

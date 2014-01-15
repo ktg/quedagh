@@ -1,8 +1,6 @@
 package uk.ac.nott.mrl.quedagh.model.stages;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.wornchaos.client.server.ObjectStore;
 
@@ -34,66 +32,90 @@ public class Search extends Stage
 	}
 
 	@Override
+	public void setupTeam(final Game game, final Team team)
+	{
+		team.postMessages(new Message("Travelled " + Math.round(team.getDistance()) + "m"));
+	}
+
+	@Override
 	public void start(final Game game)
 	{
 		game.getExplored().clear();
 		super.start(game);
 	}
 
-	@Override
-	public void setupTeam(Game game, Team team)
+	private static int getCurrentFound(Game game)
 	{
-		team.postMessages(new Message("Travelled " + Math.round(team.getDistance()) + "m: Found 0/"
-										+ game.getMarkers().size()));
-	}
-
-	@Override
-	public void update(Game game, final Team team, final Collection<PositionLogItem> log, final ObjectStore store)
-	{
-		final List<Marker> remaining = new ArrayList<Marker>();
-		for (final Marker marker : game.getMarkers())
+		if(game == null || game.getState() == null)
 		{
-			if (marker.getColour() == null)
+			return 0;
+		}
+		int found = 0;		
+		for(char character : game.getState().toCharArray())
+		{
+			if(character == '-')
 			{
-				remaining.add(marker);
+				found++;
 			}
 		}
-
+		
+		return found;
+	}
+	
+	@Override
+	public void update(final Game game, final Team team, final Collection<PositionLogItem> log, final ObjectStore store)
+	{
 		for (final PositionLogItem item : log)
 		{
 			game.getExplored().add(item);
 
-			for (final Marker marker : remaining)
+			for (final Marker marker : game.getMarkers())
 			{
-				if (marker.getDistance(item) < game.getRadius())
+				if (marker.getColour() == null && marker.getDistance(item) < game.getRadius())
 				{
 					marker.setColour(team.getColour());
-					remaining.remove(marker);
-					break;
 				}
 			}
 		}
 
-		if (remaining.isEmpty())
+		final int oldFound = getCurrentFound(game);
+		int found = 0;
+		String state = "";
+		for (final Marker marker : game.getMarkers())
 		{
-			Stage next = getNext();
-			game.setStage(next);
-			store.store(game);
-			next.update(null, team, log, store);			
-		}
-		else
-		{
-			if(team.getDistance() > 1000)
+			if (marker.getColour() == null)
 			{
-				team.postMessages(new Message("Travelled " + Math.round(team.getDistance() / 100) / 10.0 + "km: Found "
-						+ (game.getMarkers().size() - remaining.size()) + "/"
-						+ game.getMarkers().size()));				
+				state = state + "-";
 			}
 			else
 			{
-				team.postMessages(new Message("Travelled " + Math.round(team.getDistance()) + "m: Found "
-												+ (game.getMarkers().size() - remaining.size()) + "/"
-												+ game.getMarkers().size()));
+				state = state + new String(Character.toChars(marker.getColour().ordinal() + 65));
+				found++;
+			}
+		}
+		
+		if(oldFound != found)
+		{
+			game.setState(state);
+			game.postMessages(new Message("Found " + found + "/" + game.getMarkers().size()));
+		}
+
+		if (found == game.getMarkers().size())
+		{
+			final Stage next = getNext();
+			game.setStage(next);
+			store.store(game);
+			next.update(null, team, log, store);
+		}
+		else
+		{
+			if (team.getDistance() > 1000)
+			{
+				team.postMessages(new Message("Travelled " + Math.round(team.getDistance() / 100) / 10.0 + "km"));
+			}
+			else
+			{
+				team.postMessages(new Message("Travelled " + Math.round(team.getDistance()) + "m"));
 			}
 		}
 	}

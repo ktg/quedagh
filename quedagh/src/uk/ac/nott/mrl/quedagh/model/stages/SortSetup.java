@@ -1,20 +1,19 @@
 package uk.ac.nott.mrl.quedagh.model.stages;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import org.wornchaos.client.server.ObjectStore;
 import org.wornchaos.logger.Log;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 import uk.ac.nott.mrl.quedagh.model.Marker;
 import uk.ac.nott.mrl.quedagh.model.Message;
+import uk.ac.nott.mrl.quedagh.model.Position;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.Team;
-import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 
 import com.googlecode.objectify.annotation.EntitySubclass;
 
@@ -26,7 +25,33 @@ public class SortSetup extends Stage
 		Bubble, Selection
 	}
 
-	private static final Message message = new Message("Go to a marker");
+	private static final Message message = new Message("Go to a Marker");
+
+	private static char[] createCharArray(final int length)
+	{
+		final char[] array = new char[length];
+		for (int index = 0; index < length; index++)
+		{
+			array[index] = (char) (65 + index);
+		}
+
+		return array;
+	}
+
+	// Implementing Fisher–Yates shuffle
+	private static void shuffleArray(final char[] array)
+	{
+		final Random rnd = new Random();
+		for (int index = array.length - 1; index > 0; index--)
+		{
+			final int swapIndex = rnd.nextInt(index + 1);
+			// Simple swap
+			final char swap = array[swapIndex];
+			array[swapIndex] = array[index];
+			array[index] = swap;
+		}
+	}
+
 	private SortType type;
 
 	public SortSetup(final String id, final Stage next, final SortType type)
@@ -40,6 +65,31 @@ public class SortSetup extends Stage
 
 	}
 
+	public void setupMarkers(final Game game)
+	{
+		// Set up markers & teams
+		if (game.getLevel() != null && game.getLevel().getInitOrder() != null)
+		{
+			game.setState(game.getLevel().getInitOrder());
+			return;
+		}
+
+		randomizeMarkers(game);
+		while (game.isInOrder())
+		{
+			randomizeMarkers(game);
+		}
+
+		for (final Team ateam : game.getTeams())
+		{
+			final int near = nearestMarkerIndex(game, ateam.getLastKnown());
+			if (near != -1)
+			{
+				ateam.setValue(game.getState().charAt(near));
+			}
+		}
+	}
+
 	@Override
 	public void setupTeam(final Game game, final Team team)
 	{
@@ -49,24 +99,10 @@ public class SortSetup extends Stage
 	@Override
 	public void update(final Game game, final Team team, final Collection<PositionLogItem> log, final ObjectStore store)
 	{
-		if (isFinished(game))
+		if (isInPosition(game))
 		{
 			setupMarkers(game);
-			
-			Log.info("Order = " + game.getOrder());
-			
-			while (inOrder(game.getMarkers()))
-			{
-				randomizeMarkers(game.getMarkers());
-				for (final Team ateam : game.getTeams())
-				{
-					final Marker near = game.nearMarker(ateam.getLastKnown());
-					ateam.setValue(near.getValue());
-				}
-				Log.info("Order = " + game.getOrder());				
-			}
 
-			
 			Log.info(type.name() + " Sort");
 			if (type == SortType.Bubble)
 			{
@@ -97,21 +133,7 @@ public class SortSetup extends Stage
 		}
 	}
 
-	private boolean inOrder(final Iterable<Marker> markers)
-	{
-		Marker last = null;
-		for (final Marker marker : markers)
-		{
-			if (last != null)
-			{
-				if (last.getValue() > marker.getValue()) { return false; }
-			}
-			last = marker;
-		}
-		return true;
-	}
-
-	private boolean isFinished(final Game game)
+	private boolean isInPosition(final Game game)
 	{
 		final Collection<Marker> markers = new HashSet<Marker>();
 		for (final Team ateam : game.getTeams())
@@ -128,41 +150,21 @@ public class SortSetup extends Stage
 		return true;
 	}
 
-	public void setupMarkers(final Game game)
+	private int nearestMarkerIndex(final Game game, final Position position)
 	{
-		// Set up markers & teams
-		final List<Marker> markers = new ArrayList<Marker>(game.getMarkers());
-		for (final Team ateam : game.getTeams())
+		for (int index = 0; index < game.getMarkers().size(); index++)
 		{
-			final Marker near = game.nearMarker(ateam.getLastKnown());
-			near.setValue(ateam.getValue());
-			markers.remove(near);
+			final Marker marker = game.getMarkers().get(index);
+			if (game.areNear(position, marker)) { return index; }
 		}
-
-		int value = game.getTeams().size() + 1;
-		final Random random = new Random();			
-		while(!markers.isEmpty())
-		{
-			int mark = random.nextInt(markers.size());
-			Marker marker = markers.get(mark);
-			markers.remove(marker);
-			marker.setValue(value);
-			value++;
-		}
+		return -1;
 	}
-	
-	private void randomizeMarkers(final List<Marker> originalList)
+
+	private void randomizeMarkers(final Game game)
 	{
-		int value = 1;
-		final List<Marker> markers = new ArrayList<Marker>(originalList);		
-		final Random random = new Random();			
-		while(!markers.isEmpty())
-		{
-			final int rval = random.nextInt(markers.size());
-			final Marker marker = markers.get(rval);
-			markers.remove(marker);
-			marker.setValue(value);
-			value++;
-		}		
+		final char[] array = createCharArray(game.getMarkers().size());
+		shuffleArray(array);
+		game.setState(new String(array));
+		Log.info("Order = " + game.getState());
 	}
 }

@@ -8,27 +8,30 @@ import com.googlecode.objectify.annotation.Embed;
 public class GameEvent extends Message
 {
 	private long time;
-	private String order;
+	private String state;
+	private String stage;
 
 	public GameEvent()
 	{
 		time = new Date().getTime();
 	}
 
-	public GameEvent(final long time, final String order, final Message message)
+	public GameEvent(final long time, final String state, final String stage, final Message message)
 	{
 		this.time = time;
-		if(message != null)
+		if (message != null)
 		{
 			setText(message.getText());
 			setResponse(message.getResponse());
+			setAdmin(message.isAdmin());
 		}
-		this.order = order;
+		this.state = state;
+		this.stage = stage;
 	}
 
-	public String getOrder()
+	public String getState()
 	{
-		return order;
+		return state;
 	}
 
 	public long getTime()
@@ -36,9 +39,19 @@ public class GameEvent extends Message
 		return time;
 	}
 
-	public void setOrder(final String order)
+	public String getStage()
 	{
-		this.order = order;
+		return stage;
+	}
+	
+	public void setStage(final String stage)
+	{
+		this.stage = stage;
+	}
+	
+	public void setState(final String state)
+	{
+		this.state = state;
 	}
 
 	public void setTime(final long time)

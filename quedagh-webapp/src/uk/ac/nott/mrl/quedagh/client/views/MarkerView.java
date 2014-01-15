@@ -36,6 +36,11 @@ public class MarkerView implements View<Marker>
 			mapMarker = createMarker();
 		}
 	}
+	
+	public LatLng getLatLng()
+	{
+		return LatLng.newInstance(marker.getLatitude(), marker.getLongitude());
+	}
 
 	private com.google.gwt.maps.client.overlays.Marker createMarker()
 	{

@@ -1,12 +1,11 @@
 package uk.ac.nott.mrl.quedagh.activities;
 
-import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.Date;
 
 import org.wornchaos.client.server.AsyncCallback;
 import org.wornchaos.logger.Log;
-import org.wornchaos.parser.gson.GsonParserFactory;
+import org.wornchaos.parser.gson.GsonParser;
 import org.wornchaos.server.JSONServerHandler;
 import org.wornchaos.server.ModifiedCallback;
 
@@ -25,9 +24,14 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.IntentSender;
 import android.location.Location;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.Settings.Secure;
 import android.view.Gravity;
 import android.view.View;
@@ -54,21 +58,20 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		TabListener
 {
 	private GoogleMap map;
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 	private boolean tracking = true;
 
 	private LinearLayout messagePanel;
 
 	private TrailView trailView;
 
-	private Thread updateThread;
-
 	private boolean updating = true;
+	private boolean waitingUpdate = false;
 
 	private QuedaghServer server;
 
 	private Object syncObject = new Object();
-	
+
 	private String[] devices;
 
 	// Milliseconds per second
@@ -179,8 +182,7 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 
 		positionManager.setDeviceID(deviceID);
 
-		server = (QuedaghServer) Proxy.newProxyInstance(QuedaghServer.class.getClassLoader(),
-														new Class[] { QuedaghServer.class }, new JSONServerHandler(new GsonParserFactory().create(null)));
+		server = JSONServerHandler.createServer(QuedaghServer.class, new GsonParser());
 		server.setHostURL("http://quedaghs.appspot.com/");
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -287,52 +289,61 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 	protected void onStart()
 	{
 		super.onStart();
+		Log.info("Start");
 		locationClient.connect();
 
-		updateThread = new Thread(new Runnable()
+		final Thread updateThread = new Thread(new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				try
 				{
+					updating = true;
 					while (updating)
 					{
-						final Collection<PositionLogItem> updates = positionManager.getUpdates();
-						if (updates == null) { return; }
+						if (!waitingUpdate)
+						{
+							final Collection<PositionLogItem> updates = positionManager.getUpdates();
+							if (updates == null) { return; }
 
-						server.update(	positionManager.getGameID(), positionManager.getDeviceID(), updates,
-										new ModifiedCallback<Game>(positionManager.getLastModified())
-										{
-											@Override
-											public void onFailure(final Throwable caught)
+							waitingUpdate = true;
+							server.update(	positionManager.getGameID(), positionManager.getDeviceID(), updates,
+											new ModifiedCallback<Game>(positionManager.getLastModified())
 											{
-												super.onFailure(caught);
-												positionManager.updateFailed();
-											}
-
-											@Override
-											public void onSuccess(final Game game)
-											{
-												if (game != null)
+												@Override
+												public void onFailure(final Throwable caught)
 												{
-													positionManager.setGame(game);
-													runOnUiThread(new Runnable()
+													super.onFailure(caught);
+													positionManager.updateFailed();
+													waitingUpdate = false;
+												}
+
+												@Override
+												public void onSuccess(final Game game)
+												{
+													waitingUpdate = false;
+													if (game != null)
 													{
-														@Override
-														public void run()
+														positionManager.setGame(game);
+														runOnUiThread(new Runnable()
 														{
-															handleUpdate(game);
-														}
-													});
+															@Override
+															public void run()
+															{
+																handleUpdate(game);
+															}
+														});
+													}
+													else
+													{
+														positionManager.clearPending();
+													}
 												}
-												else
-												{
-													positionManager.clearPending();
-												}
-											}
-										});
-						synchronized(syncObject)
+											});
+
+						}
+						synchronized (syncObject)
 						{
 							syncObject.wait(5000);
 						}
@@ -350,7 +361,8 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 	@Override
 	protected void onStop()
 	{
-
+		Log.info("Stop");
+		updating = false;
 		removeLocationListener();
 		super.onStop();
 	}
@@ -399,18 +411,22 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 
 	private void handleUpdate(final Game game)
 	{
-		final ActionBar actionBar = getActionBar();
-		for (int index = 0; index < devices.length; index++)
+		if (devices != null)
 		{
-			final Team team = game.getTeam(devices[index]);
-			if (team != null)
+			final ActionBar actionBar = getActionBar();
+			for (int index = 0; index < devices.length; index++)
 			{
-				final Tab tab = actionBar.getTabAt(index);
-				if (tab != null)
+				final Team team = game.getTeam(devices[index]);
+				if (team != null)
 				{
-					tab.setIcon(getResource("bullet", team.getColour()));
-					tab.setText("Team " + Game.str(team.getValue()));
+					final Tab tab = actionBar.getTabAt(index);
+					if (tab != null)
+					{
+						tab.setIcon(getResource("bullet", team.getColour()));
+						tab.setText("Team " + team.getName());
+					}
 				}
+
 			}
 		}
 		final Team team = game.getTeam(positionManager.getDeviceID());
@@ -430,14 +446,19 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 		}
 		if (!team.getMessages().iterator().hasNext() && !game.getMessages().iterator().hasNext())
 		{
+			messagePanel.removeAllViewsInLayout();
 			messagePanel.setVisibility(View.INVISIBLE);
 		}
 		else
 		{
+			final int messageCount = messagePanel.getChildCount();
 			messagePanel.removeAllViewsInLayout();
 			for (final Message message : game.getMessages())
 			{
-				addMessage(message);
+				if (!message.isAdmin() || (team != null && team.isAdmin()))
+				{
+					addMessage(message);
+				}
 			}
 
 			for (final Message message : team.getMessages())
@@ -445,6 +466,22 @@ public class TresureHunt extends Activity implements LocationListener, Connectio
 				addMessage(message);
 			}
 			messagePanel.setVisibility(View.VISIBLE);
+
+			if (messagePanel.getChildCount() > messageCount)
+			{
+				try
+				{
+					final Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					final Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+					r.play();
+
+					final Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+					v.vibrate(100);
+				}
+				catch (final Exception e)
+				{
+				}
+			}
 		}
 		trailView.invalidate();
 	}

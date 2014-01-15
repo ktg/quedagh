@@ -1,6 +1,6 @@
 package uk.ac.nott.mrl.quedagh.model;
 
-import org.wornchaos.client.server.Named;
+import org.wornchaos.client.server.RequestParam;
 
 import com.googlecode.objectify.annotation.Embed;
 
@@ -8,7 +8,7 @@ import com.googlecode.objectify.annotation.Embed;
 public class Position
 {
 	private static final float EARTH_DIAMETER = 12756200;
-	
+
 	private float lat;
 	private float lng;
 
@@ -37,10 +37,7 @@ public class Position
 
 	public float getDistance(final Position position2)
 	{
-		if(position2 == null)
-		{
-			return 0;
-		}
+		if (position2 == null) { return 0; }
 		final double dLat = deg2rad(position2.lat - lat);
 		final double dLon = deg2rad(position2.lng - lng);
 		final double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat))
@@ -50,13 +47,13 @@ public class Position
 		return d;
 	}
 
-	@Named("lat")
+	@RequestParam("lat")
 	public float getLatitude()
 	{
 		return lat;
 	}
 
-	@Named("lng")
+	@RequestParam("lng")
 	public float getLongitude()
 	{
 		return lng;
@@ -70,13 +67,13 @@ public class Position
 		return (((int) bits) ^ ((int) (bits >> 32)));
 	}
 
-	@Named("lat")	
+	@RequestParam("lat")
 	public void setLatitude(final float lat)
 	{
 		this.lat = lat;
 	}
 
-	@Named("lng")	
+	@RequestParam("lng")
 	public void setLongitude(final float lng)
 	{
 		this.lng = lng;

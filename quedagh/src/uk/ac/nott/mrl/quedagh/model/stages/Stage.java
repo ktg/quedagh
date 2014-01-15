@@ -6,10 +6,10 @@ import java.util.Collection;
 import org.wornchaos.client.server.ObjectStore;
 
 import uk.ac.nott.mrl.quedagh.model.Game;
+import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 import uk.ac.nott.mrl.quedagh.model.Message;
 import uk.ac.nott.mrl.quedagh.model.PositionLogItem;
 import uk.ac.nott.mrl.quedagh.model.Team;
-import uk.ac.nott.mrl.quedagh.model.Game.Draw;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -26,7 +26,7 @@ public abstract class Stage
 	private Ref<Stage> next;
 
 	private Draw draw;
-	
+
 	private Collection<Message> messages = new ArrayList<Message>();
 
 	Stage()
@@ -49,7 +49,7 @@ public abstract class Stage
 	{
 		this.id = id;
 		this.draw = draw;
-		if(next != null)
+		if (next != null)
 		{
 			this.next = Ref.create(next);
 		}
@@ -59,11 +59,16 @@ public abstract class Stage
 	{
 		this.id = id;
 		this.draw = draw;
-		if(next != null)
+		if (next != null)
 		{
 			this.next = Ref.create(next);
 		}
 		this.messages = messages;
+	}
+
+	public Draw getDraw()
+	{
+		return draw;
 	}
 
 	public String getId()
@@ -78,15 +83,17 @@ public abstract class Stage
 
 	public Stage getNext()
 	{
-		if(next == null)
-		{
-			return null;
-		}
+		if (next == null) { return null; }
 		return next.get();
 	}
 
-	public void response(Game game, final Team team, final String response, final ObjectStore store)
+	public void response(final Game game, final Team team, final String response, final ObjectStore store)
 	{
+	}
+
+	public void setDraw(final Draw draw)
+	{
+		this.draw = draw;
 	}
 
 	public void setId(final String id)
@@ -96,22 +103,21 @@ public abstract class Stage
 
 	public void setNext(final Stage next)
 	{
-		this.next = Ref.create(next);
+		if(next == null)
+		{
+			this.next = null;
+		}
+		else
+		{
+			this.next = Ref.create(next);
+		}
 	}
 
-	public void setupTeam(Game game, Team team)
+	public void setupTeam(final Game game, final Team team)
 	{
 		team.postMessages();
 	}
 
-	protected Stage nextStage(final Game game, final ObjectStore store)
-	{
-		final Stage next = getNext(); 
-		game.setStage(next);
-		store.store(game);
-		return next;
-	}
-	
 	public void start(final Game game)
 	{
 		for (final Team team : game.getTeams())
@@ -124,13 +130,11 @@ public abstract class Stage
 
 	public abstract void update(Game game, Team team, Collection<PositionLogItem> log, final ObjectStore store);
 
-	public Draw getDraw()
+	protected Stage startNextStage(final Game game, final ObjectStore store)
 	{
-		return draw;
-	}
-
-	public void setDraw(Draw draw)
-	{
-		this.draw = draw;
+		final Stage next = getNext();
+		game.setStage(next);
+		store.store(game);
+		return next;
 	}
 }

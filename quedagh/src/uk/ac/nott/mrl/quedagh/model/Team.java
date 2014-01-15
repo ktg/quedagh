@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.wornchaos.client.parser.ParseGroup;
+import org.wornchaos.client.server.ParseExclude;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -22,12 +22,12 @@ public class Team
 
 	private int value;
 
-	@ParseGroup("none")
+	@ParseExclude
 	private Ref<Game> game;
 
 	@Id
 	private String id;
-	
+
 	@Index
 	private String device;
 
@@ -36,42 +36,32 @@ public class Team
 	private Colour colour;
 
 	private float distance;
-	
+
 	private PositionLogItem lastKnown;
 
-	@ParseGroup({"logs"})
+	@Logs
 	private List<PositionLogItem> log = new ArrayList<PositionLogItem>();
 
-	@ParseGroup({"logs"})
+	@Logs
 	private List<GameEvent> events = new ArrayList<GameEvent>();
-	
-	private Collection<Message> messages = new ArrayList<Message>();
 
-	public Team(final Game game)
-	{
-		this.game = Ref.create(game);
-	}
+	private Collection<Message> messages = new ArrayList<Message>();
 
 	public Team()
 	{
 
 	}
 
-	public Collection<GameEvent> getEvents()
+	public Team(final Game game)
 	{
-		return events;
+		this.game = Ref.create(game);
 	}
-	
-	public void addMessage(Message message)
+
+	public void addMessage(final Message message)
 	{
 		messages.add(message);
 	}
-	
-	public int getMessageCount()
-	{
-		return messages.size();
-	}
-	
+
 	public Colour getColour()
 	{
 		return colour;
@@ -87,8 +77,25 @@ public class Team
 		return distance;
 	}
 
+	public Collection<GameEvent> getEvents()
+	{
+		return events;
+	}
+
+	public Game getGame()
+	{
+		if (game == null) { return null; }
+		return game.get();
+	}
+
+	public String getId()
+	{
+		return id;
+	}
+
 	public PositionLogItem getLastKnown()
 	{
+		if (lastKnown == null && !log.isEmpty()) { return log.get(log.size() - 1); }
 		return lastKnown;
 	}
 
@@ -96,10 +103,10 @@ public class Team
 	{
 		return log;
 	}
-	
-	public void setLastKnown(PositionLogItem lastKnown)
+
+	public int getMessageCount()
 	{
-		this.lastKnown = lastKnown;
+		return messages.size();
 	}
 
 	public Iterable<Message> getMessages()
@@ -107,43 +114,12 @@ public class Team
 		return messages;
 	}
 
-	public void postMessages(final Iterable<Message> messages)
+	public String getName()
 	{
-		if ((messages == null || !messages.iterator().hasNext()) && this.messages.isEmpty()) { return; }
-		this.messages.clear();
-		final long time = new Date().getTime();
-		if(messages.iterator().hasNext())
-		{
-			for (final Message message : messages)
-			{
-				events.add(new GameEvent(time, null, message));
-				this.messages.add(message);
-			}
-		}
-		else
-		{
-			events.add(new GameEvent(time, null, null));
-		}
+		if (value == 0) { return colour.name(); }
+		return "" + (char) value;
 	}
 
-	public void postMessages(final Message... messages)
-	{
-		if ((messages == null || messages.length == 0) && this.messages.isEmpty()) { return; }
-		this.messages.clear();
-		final long time = new Date().getTime();	
-		if(messages.length != 0)
-		{
-			for (final Message message : messages)
-			{
-				events.add(new GameEvent(time, null, message));
-				this.messages.add(message);
-			}
-		}
-		else
-		{
-			events.add(new GameEvent(time, null, null));
-		}
-	}
 	public int getValue()
 	{
 		return value;
@@ -154,21 +130,50 @@ public class Team
 		return admin;
 	}
 
+	public void postMessages(final Iterable<Message> messages)
+	{
+		if ((messages == null || !messages.iterator().hasNext()) && this.messages.isEmpty()) { return; }
+		this.messages.clear();
+		final long time = new Date().getTime();
+		if (messages.iterator().hasNext())
+		{
+			for (final Message message : messages)
+			{
+				events.add(new GameEvent(time, null, getGame().getStageKey(), message));
+				this.messages.add(message);
+			}
+		}
+		else
+		{
+			events.add(new GameEvent(time, null, getGame().getStageKey(), null));
+		}
+	}
+
+	public void postMessages(final Message... messages)
+	{
+		if ((messages == null || messages.length == 0) && this.messages.isEmpty()) { return; }
+		this.messages.clear();
+		final long time = new Date().getTime();
+		if (messages.length != 0)
+		{
+			for (final Message message : messages)
+			{
+				events.add(new GameEvent(time, null, getGame().getStageKey(), message));
+				this.messages.add(message);
+			}
+		}
+		else
+		{
+			events.add(new GameEvent(time, null, getGame().getStageKey(), null));
+		}
+	}
+
 	public void removeLogs(final Iterable<PositionLogItem> oldLogs)
 	{
 		for (final PositionLogItem item : oldLogs)
 		{
 			log.remove(item);
 		}
-	}
-
-	public Game getGame()
-	{
-		if(game == null)
-		{
-			return null;
-		}
-		return game.get();
 	}
 
 	public void setAdmin(final boolean admin)
@@ -191,6 +196,17 @@ public class Team
 		this.distance = distance;
 	}
 
+	public void setId(final String id)
+	{
+		this.id = id;
+
+	}
+
+	public void setLastKnown(final PositionLogItem lastKnown)
+	{
+		this.lastKnown = lastKnown;
+	}
+
 	public void setValue(final int value)
 	{
 		this.value = value;
@@ -198,45 +214,31 @@ public class Team
 
 	public void updateDistance(final long timestamp)
 	{
-		if(log == null || log.isEmpty())
-		{
-			return;
-		}		
-		
+		if (log == null || log.isEmpty()) { return; }
+
 		float dist = 0;
 		PositionLogItem last = null;
 		for (final PositionLogItem positionLog : log)
 		{
-			if(timestamp != 0 && positionLog.getTime() > timestamp)
+			if (positionLog.getTime() > timestamp)
 			{
 				if (last != null)
 				{
 					dist += last.getDistance(positionLog);
 				}
-	
+
 				last = positionLog;
 			}
 		}
 
 		distance = dist;
-		lastKnown = last;		
-	}
-
-	public String getId()
-	{
-		return id;
-	}
-	
-	public void setId(String id)
-	{
-		this.id = id;
-		
+		lastKnown = last;
 	}
 
 	void reset()
 	{
 		messages.clear();
 		events.clear();
-		log.clear();		
+		log.clear();
 	}
 }
