@@ -8,6 +8,7 @@ import com.googlecode.objectify.Ref;
  *
  * @author Jeff Schnitzer <jeff@infohazard.org>
  */
+@SuppressWarnings("serial")
 public class DeadRef<T> extends Ref<T>
 {
 	/** Make GWT happy */
