@@ -1,0 +1,6 @@
+include ':shared'
+include ':android'
+include ':webapp'
+include ':wornchaos:shared'
+project(':wornchaos:shared').projectDir = new File(settingsDir, '../wornchaos/shared')
+

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: gwt-ajaxloader-1.1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt.google-apis/gwt-ajaxloader/1.1.0/82c11262a7e57b747bc5f426d498287354196d5/gwt-ajaxloader-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt.google-apis/gwt-ajaxloader/1.1.0/e7e6c78c4f8d97c862b14c5e99ab30f4189649e8/gwt-ajaxloader-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
