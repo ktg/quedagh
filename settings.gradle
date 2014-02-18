@@ -1,6 +1,7 @@
-include ':shared'
+include ':core'
 include ':android'
 include ':webapp'
-include ':wornchaos:shared'
-project(':wornchaos:shared').projectDir = new File(settingsDir, '../wornchaos/shared')
+include ':wornchaos', ':wornchaos:core'
+project(':wornchaos').projectDir = new File(settingsDir, '../wornchaos')
+project(':wornchaos:core').projectDir = new File(settingsDir, '../wornchaos/core')
 

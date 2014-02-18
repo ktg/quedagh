@@ -2,203 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d35ffc38-3601-4d01-ab08-3332c46070de" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings.gradle" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/.externalToolBuilders/Quedagh Android Autobuild.launch" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/libs/android-support-v4.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/libs/google-play-services.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/libs/quedagh.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/libs/wornchaos.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/lint.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/project.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/assets/diagramm.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/google/appengine/api/datastore/Key.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/Key.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/NotFoundException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/Ref.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/AlsoLoad.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Cache.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Embed.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/EmbedMap.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Entity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/EntitySubclass.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Id.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Ignore.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/IgnoreLoad.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Load.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/OnLoad.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/OnSave.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Parent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/annotation/Serialize.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/com/googlecode/objectify/impl/ref/DeadRef.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/uk/ac/nott/mrl/quedagh/Quedagh.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/uk/ac/nott/mrl/quedagh/activities/PositionManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/uk/ac/nott/mrl/quedagh/activities/TresureHunt.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/uk/ac/nott/mrl/quedagh/tiles/FoggyTileProvider.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/uk/ac/nott/mrl/quedagh/view/RelativeTouchableLayout.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/java/uk/ac/nott/mrl/quedagh/view/TrailView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-hdpi/icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-ldpi/icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_green.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_grey.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_purple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/bullet_yellow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-mdpi/icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_green.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_grey.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_purple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/bullet_yellow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable-xhdpi/icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/back.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/center_flag.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_green.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_grey.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_purple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/drawable/marker_yellow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/layout/main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/values-v11/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/values-v14/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/values/strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-android/src/main/res/values/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Game.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/GameEvent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Level.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Logs.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Marker.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Message.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Position.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/PositionLogItem.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/QuedaghServer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Swap.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Team.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/BubbleSort.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/QuickSort.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Search.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SelectionSort.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Sort.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SortSelect.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SortSetup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Stage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Staging.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.externalToolBuilders/Webapp Setup.launch" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/.jsdtscope" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/com.google.appengine.eclipse.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/com.google.gdt.eclipse.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/com.google.gwt.eclipse.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/org.eclipse.ltk.core.refactoring.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/org.eclipse.wst.common.component" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/org.eclipse.wst.common.project.facet.core.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/org.eclipse.wst.jsdt.ui.superType.container" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/.settings/org.eclipse.wst.jsdt.ui.superType.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/appengine-api-labs.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/appengine-api-stubs.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/appengine-api.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/appengine-testing.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/guava-gwt-14.0.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/gwt-ajaxloader.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/gwt-codeserver.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/gwt-dev.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/gwt-maps-api-3.9.0-build-17.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/gwt-user.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/validation-api-1.0.0.GA-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/lib/validation-api-1.0.0.GA.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/logging.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/Quedagh.gwt.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/Quedagh.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/pages/GameView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/pages/GamesView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/pages/GamesView.ui.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/places/Game.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/places/Games.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/views/MarkerView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/views/TeamInfoView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/client/views/TeamInfoView.ui.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/java/uk/ac/nott/mrl/quedagh/server/QuedaghServerImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/META-INF/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/appengine-web.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/appengine-api-1.0-sdk-1.8.8.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/appengine-api-labs.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/appengine-endpoints-deps.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/appengine-endpoints.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/appengine-jsr107cache-1.8.8.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/commons-fileupload-1.2.2.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/gson-2.2.4.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/guava-14.0.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/gwt-servlet.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/jsr107cache-1.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/objectify-4.0rc1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/quedagh.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/lib/wornchaos.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/logging.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/WEB-INF/web.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_green.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_grey.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_purple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/blob_yellow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_green.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_grey.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_purple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/bullet_yellow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/center_flag.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_green.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_grey.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_pink.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_purple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/images/markers/marker_yellow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/main/webapp/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/src/test/java/uk/ac/nott/mrl/quedagh/server/ServerTests.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh-webapp/war/WEB-INF/lib/gson-2.2.4.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/.externalToolBuilders/Quedagh Autobuild.launch" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/libs/objectify-4.0rc1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/libs/wornchaos.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/quedagh/test/uk/ac/nott/mrl/quedagh/model/stages/SortTest.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../webgaea/android/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../webgaea/core/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../webgaea/desktop/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../webgaea/settings.gradle" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.buildpath" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.project" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.settings/.jsdtscope" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.settings/org.eclipse.php.core.prefs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.settings/org.eclipse.wst.common.project.facet.core.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.settings/org.eclipse.wst.jsdt.ui.superType.container" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../dashboard/.settings/org.eclipse.wst.jsdt.ui.superType.name" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../webgaea/webgaea-android/.classpath" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../webgaea/webgaea-android/.gitignore" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../webgaea/webgaea-android/.project" afterPath="" />
@@ -320,6 +134,78 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/../webgaea/webgaea/src/org/wornchaos/webgaea/model/targeting/Targeting.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../webgaea/webgaea/src/org/wornchaos/webgaea/model/values/Value.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../webgaea/webgaea/test/org/wornchaos/webgaea/model/tiles/MapTest.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/.gitignore" afterPath="$PROJECT_DIR$/../placebooks/core/.gitignore" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/build.gradle" afterPath="$PROJECT_DIR$/../placebooks/core/build.gradle" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/Entry.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/Entry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/Group.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/Group.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/Item.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/Item.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/LoginDetails.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/LoginDetails.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/Page.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/Page.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/PlaceBook.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/PlaceBook.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/PlaceBookService.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/PlaceBookService.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/Position.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/Position.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/ServerInfo.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/ServerInfo.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/ServiceInfo.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/ServiceInfo.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/Shelf.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/Shelf.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../placebooks/shared/src/main/java/org/placebooks/client/model/User.java" afterPath="$PROJECT_DIR$/../placebooks/core/src/main/java/org/placebooks/client/model/User.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/.gitignore" afterPath="$PROJECT_DIR$/core/.gitignore" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/build.gradle" afterPath="$PROJECT_DIR$/core/build.gradle" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Game.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Game.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/GameEvent.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/GameEvent.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Level.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Level.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Logs.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Logs.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Marker.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Marker.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Message.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Message.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Position.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Position.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/PositionLogItem.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/PositionLogItem.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/QuedaghServer.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/QuedaghServer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Swap.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Swap.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Team.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/Team.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/BubbleSort.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/BubbleSort.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/QuickSort.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/QuickSort.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Search.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Search.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SelectionSort.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SelectionSort.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Sort.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Sort.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SortSelect.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SortSelect.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SortSetup.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/SortSetup.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Stage.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Stage.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Staging.java" afterPath="$PROJECT_DIR$/core/src/main/java/uk/ac/nott/mrl/quedagh/model/stages/Staging.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/shared/src/test/java/uk/ac/nott/mrl/quedagh/model/stages/SortTest.java" afterPath="$PROJECT_DIR$/core/src/test/java/uk/ac/nott/mrl/quedagh/model/stages/SortTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/.gitignore" afterPath="$PROJECT_DIR$/../wornchaos/core/.gitignore" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/build.gradle" afterPath="$PROJECT_DIR$/../wornchaos/core/build.gradle" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/logging.properties" afterPath="$PROJECT_DIR$/../wornchaos/core/src/logging.properties" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/AsyncCallback.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/AsyncCallback.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/Cache.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/Cache.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/ConnectionStatus.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/ConnectionStatus.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/HTTPException.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/HTTPException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/JSONServer.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/JSONServer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/JSONServerHandler.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/JSONServerHandler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/Modified.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/Modified.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/ObjectStore.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/ObjectStore.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/PaginatedList.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/PaginatedList.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/ParseExclude.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/ParseExclude.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/Prefix.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/Prefix.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/Request.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/Request.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/RequestParam.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/client/server/RequestParam.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/collections/ListReverser.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/collections/ListReverser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/events/EventDispatcher.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/events/EventDispatcher.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/events/EventHandler.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/events/EventHandler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/logger/Log.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/logger/Log.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/logger/LogFormatter.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/logger/LogFormatter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/parser/Parser.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/parser/Parser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/parser/gson/AnnotationExclusionStrategy.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/parser/gson/AnnotationExclusionStrategy.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/parser/gson/GsonParser.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/parser/gson/GsonParser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/server/ModifiedCallback.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/server/ModifiedCallback.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/views/View.java" afterPath="$PROJECT_DIR$/../wornchaos/core/src/main/java/org/wornchaos/views/View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../placebooks/android/build.gradle" afterPath="$PROJECT_DIR$/../placebooks/android/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../placebooks/webapp/build.gradle" afterPath="$PROJECT_DIR$/../placebooks/webapp/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/build.gradle" afterPath="$PROJECT_DIR$/android/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapp/build.gradle" afterPath="$PROJECT_DIR$/webapp/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../wornchaos/gwt/build.gradle" afterPath="$PROJECT_DIR$/../wornchaos/gwt/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../wornchaos/webapp/build.gradle" afterPath="$PROJECT_DIR$/../wornchaos/webapp/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../placebooks/.idea/modules.xml" afterPath="$PROJECT_DIR$/../placebooks/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../placebooks/settings.gradle" afterPath="$PROJECT_DIR$/../placebooks/settings.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../placebooks/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../placebooks/.idea/workspace.xml" />
     </list>
     <ignored path="quedagh.iws" />
@@ -387,28 +273,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapp/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="8" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+            <state line="1" column="4" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="120">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="5" selection-start="2763" selection-end="2763" vertical-scroll-proportion="0.0" vertical-offset="2145" max-vertical-offset="4620">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -416,16 +282,25 @@
       <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/android/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="8" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
+            <state line="1" column="8" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shared/.gitignore">
+      <file leaf-file-name="settings.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="8" selection-start="15" selection-end="15" vertical-scroll-proportion="0.024875622" vertical-offset="0" max-vertical-offset="603">
+            <state line="7" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="195">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="1" selection-start="204" selection-end="204" vertical-scroll-proportion="0.19900498" vertical-offset="0" max-vertical-offset="603">
               <folding />
             </state>
           </provider>
@@ -542,10 +417,6 @@
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value=":shared" />
-                <option name="path" value="$PROJECT_DIR$/shared" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
                 <option name="name" value="quedagh" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
@@ -554,16 +425,20 @@
                 <option name="path" value="$PROJECT_DIR$/android" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
-                <option name="name" value=":wornchaos:shared" />
-                <option name="path" value="$PROJECT_DIR$/../wornchaos/shared" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
                 <option name="name" value=":webapp" />
                 <option name="path" value="$PROJECT_DIR$/webapp" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
+                <option name="name" value=":core" />
+                <option name="path" value="$PROJECT_DIR$/core" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
                 <option name="name" value=":wornchaos" />
                 <option name="path" value="$PROJECT_DIR$/wornchaos" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value=":wornchaos:core" />
+                <option name="path" value="$PROJECT_DIR$/../wornchaos/core" />
               </ExternalProjectPojo>
             </list>
           </value>
@@ -691,13 +566,13 @@
                 <option name="name" value="compileDebugTestJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="mergeReleaseAssets" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Runs the unit tests." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="test" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="mergeReleaseAssets" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -732,10 +607,6 @@
                 <option name="name" value="warTemplate" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="packageDebugTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Assembles the outputs of this project." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="assemble" />
@@ -744,6 +615,10 @@
                 <option name="description" value="Deletes the build directory." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="clean" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="packageDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Compiles Java source 'main:java'." />
@@ -755,6 +630,11 @@
                 <option name="name" value="dexDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles a jar archive containing the main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="build" />
@@ -763,11 +643,6 @@
                 <option name="description" value="Assembles and tests this project and all projects that depend on it." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="buildDependents" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles a jar archive containing the main classes." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="jar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -861,11 +736,11 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="mergeDebugResources" />
+                <option name="name" value="compileReleaseJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="compileReleaseJava" />
+                <option name="name" value="mergeDebugResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -931,13 +806,13 @@
                 <option name="name" value="connectedInstrumentTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="packageDebug" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Runs lint on all variants." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="lint" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="packageDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs the GWT compiler to translate Java sources to JavaScript for production ready output" />
@@ -1316,82 +1191,82 @@
             </list>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/shared">
+        <entry key="$PROJECT_DIR$/core">
           <value>
             <list>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles the outputs of this project." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="assemble" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="build" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project and all projects that depend on it." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="buildDependents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project and all projects it depends on." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="buildNeeded" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs all checks." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="check" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles classes 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="classes" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Deletes the build directory." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="clean" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Compiles Java source 'main:java'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="compileJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Compiles Java source 'test:java'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="compileTestJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles a jar archive containing the main classes." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="jar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Generates Javadoc API documentation for the main source code." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="javadoc" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Processes resources 'main:resources'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="processResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Processes resources 'test:resources'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="processTestResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs the unit tests." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="test" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles classes 'test'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/core" />
                 <option name="name" value="testClasses" />
               </ExternalTaskPojo>
             </list>
@@ -1512,82 +1387,82 @@
             </list>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/../wornchaos/shared">
+        <entry key="$PROJECT_DIR$/../wornchaos/core">
           <value>
             <list>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles the outputs of this project." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="assemble" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="build" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project and all projects that depend on it." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="buildDependents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project and all projects it depends on." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="buildNeeded" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs all checks." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="check" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles classes 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="classes" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Deletes the build directory." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="clean" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Compiles Java source 'main:java'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="compileJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Compiles Java source 'test:java'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="compileTestJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles a jar archive containing the main classes." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="jar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Generates Javadoc API documentation for the main source code." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="javadoc" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Processes resources 'main:resources'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="processResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Processes resources 'test:resources'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="processTestResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs the unit tests." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="test" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles classes 'test'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/shared" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/../wornchaos/core" />
                 <option name="name" value="testClasses" />
               </ExternalTaskPojo>
             </list>
@@ -1657,6 +1532,13 @@
                       </ExternalModuleBuildClasspathPojo>
                     </value>
                   </entry>
+                  <entry key="$PROJECT_DIR$/core">
+                    <value>
+                      <ExternalModuleBuildClasspathPojo>
+                        <option name="path" value="$PROJECT_DIR$/core" />
+                      </ExternalModuleBuildClasspathPojo>
+                    </value>
+                  </entry>
                   <entry key="$PROJECT_DIR$/quedagh">
                     <value>
                       <ExternalModuleBuildClasspathPojo>
@@ -1708,6 +1590,13 @@
                     <value>
                       <ExternalModuleBuildClasspathPojo>
                         <option name="path" value="$PROJECT_DIR$/../wornchaos" />
+                      </ExternalModuleBuildClasspathPojo>
+                    </value>
+                  </entry>
+                  <entry key="$PROJECT_DIR$/../wornchaos/core">
+                    <value>
+                      <ExternalModuleBuildClasspathPojo>
+                        <option name="path" value="$PROJECT_DIR$/../wornchaos/core" />
                       </ExternalModuleBuildClasspathPojo>
                     </value>
                   </entry>
@@ -1828,7 +1717,6 @@
         <option value="$PROJECT_DIR$/quedagh/src/test/java/uk/ac/nott/mrl/quedagh/model/stages/SortTest.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/local.properties" />
-        <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/android/build.gradle" />
         <option value="$PROJECT_DIR$/shared/build.gradle" />
         <option value="$PROJECT_DIR$/webapp/build.gradle" />
@@ -1838,6 +1726,7 @@
         <option value="$PROJECT_DIR$/android/.gitignore" />
         <option value="$PROJECT_DIR$/webapp/.gitignore" />
         <option value="$PROJECT_DIR$/shared/.gitignore" />
+        <option value="$PROJECT_DIR$/settings.gradle" />
       </list>
     </option>
   </component>
@@ -2088,6 +1977,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="wornchaos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quedagh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="quedagh" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2102,101 +2001,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shared" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quedagh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
+              <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2296,6 +2101,19 @@
       </ExternalSystemSettings>
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -2321,19 +2139,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2480,7 +2285,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.49962208" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3287234" sideWeight="0.50027734" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24958402" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -2489,12 +2293,13 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4141252" sideWeight="0.49960285" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3287234" sideWeight="0.4997227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16417083" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1636162" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24958402" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26455906" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2701054" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4141252" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2525,12 +2330,45 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Game.java">
+    <entry file="file://$PROJECT_DIR$/webapp/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="5" selection-start="2763" selection-end="2763" vertical-scroll-proportion="0.0" vertical-offset="2145" max-vertical-offset="4620">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="1" column="4" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="120">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="8" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="195">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapp/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="4" selection-start="30" selection-end="30" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="187">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="4" selection-start="9" selection-end="9" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="119">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2543,9 +2381,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="10" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
-          <folding />
-        </state>
+        <state line="2" column="10" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -2560,9 +2396,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
-          <folding />
-        </state>
+        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/.gitignore">
@@ -2577,9 +2411,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
-          <folding />
-        </state>
+        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/.gitignore">
@@ -2594,9 +2426,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
-          <folding />
-        </state>
+        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/.gitignore">
@@ -2611,9 +2441,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
-          <folding />
-        </state>
+        <state line="2" column="24" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/.gitignore">
@@ -2628,9 +2456,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -2640,9 +2466,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -2652,9 +2476,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -2664,9 +2486,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="20" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150">
-          <folding />
-        </state>
+        <state line="2" column="20" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -2676,9 +2496,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="20" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150">
-          <folding />
-        </state>
+        <state line="2" column="20" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -2688,14 +2506,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="20" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/src/test/java/uk/ac/nott/mrl/quedagh/model/stages/SortTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="32" selection-start="1577" selection-end="1577" vertical-scroll-proportion="1.7730496" vertical-offset="15" max-vertical-offset="1125" />
+        <state line="2" column="20" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/build.gradle">
@@ -2703,39 +2514,9 @@
         <state line="41" column="38" selection-start="702" selection-end="702" vertical-scroll-proportion="0.0" vertical-offset="138" max-vertical-offset="780" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../wornchaos/shared/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="52" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../wornchaos/shared/src/main/java/org/wornchaos/client/server/JSONServerHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="256" column="1" selection-start="6523" selection-end="6523" vertical-scroll-proportion="0.8509934" vertical-offset="3326" max-vertical-offset="3930">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="1" selection-start="192" selection-end="192" vertical-scroll-proportion="0.1986755" vertical-offset="0" max-vertical-offset="604" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="86" selection-start="169" selection-end="169" vertical-scroll-proportion="0.09933775" vertical-offset="0" max-vertical-offset="604">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="113" selection-end="165" vertical-scroll-proportion="0.14900662" vertical-offset="0" max-vertical-offset="604">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webapp/build.gradle">
@@ -2743,18 +2524,9 @@
         <state line="20" column="38" selection-start="431" selection-end="431" vertical-scroll-proportion="0.49668875" vertical-offset="0" max-vertical-offset="604" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/src/main/java/uk/ac/nott/mrl/quedagh/model/Game.java">
+    <entry file="file://$PROJECT_DIR$/webapp/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="5" selection-start="2763" selection-end="2763" vertical-scroll-proportion="0.0" vertical-offset="2145" max-vertical-offset="4620">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
+        <state line="1" column="4" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="136">
           <folding />
         </state>
       </provider>
@@ -2766,16 +2538,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapp/.gitignore">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="8" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+        <state line="7" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/.gitignore">
+    <entry file="file://$PROJECT_DIR$/core/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="8" selection-start="15" selection-end="15" vertical-scroll-proportion="0.024875622" vertical-offset="0" max-vertical-offset="603">
+        <state line="8" column="1" selection-start="204" selection-end="204" vertical-scroll-proportion="0.19900498" vertical-offset="0" max-vertical-offset="603">
           <folding />
         </state>
       </provider>

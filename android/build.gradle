@@ -14,8 +14,8 @@ configurations.all {
     transitive = false
 }
 
-evaluationDependsOn(':wornchaos')
-evaluationDependsOn(':shared')
+evaluationDependsOn(':wornchaos:core')
+evaluationDependsOn(':core')
 
 android {
     compileSdkVersion 19
@@ -39,8 +39,8 @@ repositories {
 }
 
 dependencies {
-    compile project(":wornchaos:shared")
-    compile project(":shared")
+    compile project(":wornchaos:core")
+    compile project(":core")
     compile "com.google.code.gson:gson:2.+"
     compile "com.android.support:support-v4:+"
     compile "com.google.android.gms:play-services:+"

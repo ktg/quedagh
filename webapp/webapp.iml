@@ -21,8 +21,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="wornchaos-shared" exported="" />
-    <orderEntry type="module" module-name="shared" exported="" />
+    <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="library" exported="" name="Gradle: appengine-api-1.0-sdk-1.8.9" level="project" />
     <orderEntry type="library" exported="" name="Gradle: appengine-api-labs-1.8.9" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gwt-user-2.6.0" level="project" />
@@ -39,6 +38,7 @@
     <orderEntry type="library" exported="" name="Gradle: commons-io-2.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jsr305-1.3.9" level="project" />
     <orderEntry type="library" exported="" name="Gradle: guava-16.0.1" level="project" />
+    <orderEntry type="module" module-name="wornchaos-core" exported="" />
   </component>
 </module>
 

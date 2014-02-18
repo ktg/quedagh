@@ -3,11 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/quedagh.iml" filepath="$PROJECT_DIR$/quedagh.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/webapp/webapp.iml" filepath="$PROJECT_DIR$/webapp/webapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/../wornchaos/wornchaos.iml" filepath="$PROJECT_DIR$/../wornchaos/wornchaos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../wornchaos/shared/wornchaos-shared.iml" filepath="$PROJECT_DIR$/../wornchaos/shared/wornchaos-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../wornchaos/core/wornchaos-core.iml" filepath="$PROJECT_DIR$/../wornchaos/core/wornchaos-core.iml" />
     </modules>
   </component>
 </project>

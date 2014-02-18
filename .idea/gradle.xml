@@ -10,10 +10,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/android" />
-            <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/webapp" />
             <option value="$PROJECT_DIR$/wornchaos" />
-            <option value="$PROJECT_DIR$/../wornchaos/shared" />
+            <option value="$PROJECT_DIR$/../wornchaos/core" />
           </set>
         </option>
       </GradleProjectSettings>
